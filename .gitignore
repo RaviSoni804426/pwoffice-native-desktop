@@ -1,0 +1,9 @@
+**/bin.v2/
+**/out/
+**/build/
+**/*.obj
+**/*.pdb
+core/Common/3dParty/boost/boost_1_72_0/stage/
+core/Common/3dParty/v8/
+core/Common/3dParty/v8_89/
+node_modules/
