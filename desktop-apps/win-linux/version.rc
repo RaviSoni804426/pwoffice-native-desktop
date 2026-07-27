@@ -2,7 +2,7 @@
 #include <windows.h>
 #include "src/platform_win/resource.h"
 
-IDI_MAINICON   ICON    DISCARDABLE APP_ICON_PATH
+IDI_MAINICON   ICON    DISCARDABLE "D:\\pwoffice-native\\branding\\pwoffice.ico"
 CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "./res/manifest/DesktopEditors.exe.manifest"
 
 #define RC_COMPILE_FLAG

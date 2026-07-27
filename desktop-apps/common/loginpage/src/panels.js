@@ -68,7 +68,7 @@ $(document).ready(function() {
                 </a>
               </li>
               <li class="menu-item separator"></li>
-              <section id="idx-sidebar-portals" class="connect">
+              <section id="idx-sidebar-portals" class="connect" style="display: none !important;">
               </section>
               <li class="menu-item devider"></li>
               <li class="menu-item">
@@ -338,7 +338,7 @@ window.sdk.on('on_native_message', function(cmd, param) {
         setLoaderVisible(false);
     } else
     if (/app\:version/.test(cmd)) {
-        $('.tool-menu a[action=about]').parent().removeClass('hidden');
+        // $('.tool-menu a[action=about]').parent().removeClass('hidden');
     }
     
     console.log(cmd, param);
