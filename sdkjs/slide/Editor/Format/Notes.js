@@ -255,7 +255,7 @@
     };
 
     CNotes.prototype.getTheme = function(){
-        return this.Master.Theme;
+        return this.Master ? this.Master.Theme : null;
     };
 
 

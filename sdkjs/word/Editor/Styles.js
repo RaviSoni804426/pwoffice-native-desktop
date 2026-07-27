@@ -10606,13 +10606,13 @@ CDocumentBorder.prototype =
 
     Check_PresentationPr : function(Theme)
     {
-        if(this.LineRef && Theme)
+        if(this.LineRef && Theme && typeof Theme.getLnStyle === "function")
         {
             var pen = Theme.getLnStyle(this.LineRef.idx, this.LineRef.Color);
 
-            this.Unifill = pen.Fill;
+            this.Unifill = pen ? pen.Fill : null;
             this.LineRef = undefined;
-            this.Size = AscFormat.isRealNumber(pen.w) ? pen.w / 36000 : 12700 /36000;
+            this.Size = pen && AscFormat.isRealNumber(pen.w) ? pen.w / 36000 : 12700 /36000;
         }
         if(!this.Unifill || !this.Unifill.isVisible())
         {

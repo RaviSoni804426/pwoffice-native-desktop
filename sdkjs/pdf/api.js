@@ -72,7 +72,8 @@
 		
 		// TODO: Perhaps we should move initialization to
 		this.initDocumentRenderer();
-		this.DocumentRenderer.open(file.data);
+		if (this.DocumentRenderer)
+			this.DocumentRenderer.open(file.data);
 		
 		AscCommon.InitBrowserInputContext(this, "id_target_cursor", "id_viewer");
 		if (AscCommon.g_inputContext)

@@ -2248,7 +2248,7 @@
         var oLn;
         var oLineRef = oStyleEntry.lnRef;
         var oLineRefUnicolor = oLineRef.getNoStyleUnicolor(nIdx, aColors);
-        oLn = oTheme.getLnStyle(oLineRef.idx, oLineRefUnicolor);
+        oLn = (oTheme && typeof oTheme.getLnStyle === "function") ? oTheme.getLnStyle(oLineRef.idx, oLineRefUnicolor) : new AscFormat.CLn();
         if(oSpPr && oSpPr.ln) {
             oLn = oSpPr.ln.createDuplicate();
             oLn.Fill.checkPhColor(oLineRefUnicolor);

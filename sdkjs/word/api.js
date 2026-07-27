@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (C) Ascensio System SIA, 2009-2026
  *
  * This program is a free software product. You can redistribute it and/or
@@ -8450,7 +8450,16 @@ background-repeat: no-repeat;\
 			this.VersionHistory.applyChanges(this);
 		}
 
-		if (file.bSerFormat)
+		const isPdfFile = (file.url && file.url.toLowerCase().indexOf('.pdf') !== -1) || 
+		                  (file.data && file.data.length >= 4 && file.data[0] === 0x25 && file.data[1] === 0x50 && file.data[2] === 0x44 && file.data[3] === 0x46);
+
+		if (isPdfFile && typeof this.initDocumentRenderer === 'function')
+		{
+			this.initDocumentRenderer();
+			if (this.DocumentRenderer)
+				this.DocumentRenderer.open(file.data);
+		}
+		else if (file.bSerFormat)
 		{
 			this.OpenDocumentFromBin(file.url, file.data);
 		}
@@ -8462,8 +8471,10 @@ background-repeat: no-repeat;\
 				this.openOOXInBrowserZip = file.data;
 				this.OpenDocumentFromZip(file.data);
 			}
-			else
+			else if (typeof this.OpenDocument === 'function')
 				this.OpenDocument(file.url, file.data);
+			else if (!isPdfFile)
+				this.OpenDocumentFromBin(file.url, file.data);
 		}
 		let perfEnd = performance.now();
 		AscCommon.sendClientLog("debug", AscCommon.getClientInfoString("onOpenDocument", perfEnd - perfStart), this);
@@ -14997,6 +15008,7 @@ background-repeat: no-repeat;\
 	asc_docs_api.prototype['GetCopyPasteDivId']                         = asc_docs_api.prototype.GetCopyPasteDivId;
 	asc_docs_api.prototype['ContentToHTML']                             = asc_docs_api.prototype.ContentToHTML;
 	asc_docs_api.prototype['InitEditor']                                = asc_docs_api.prototype.InitEditor;
+	asc_docs_api.prototype.OpenDocument                                  = function(url, data) { return this.OpenDocumentFromBin(url, data); };
 	asc_docs_api.prototype['OpenDocument']                              = asc_docs_api.prototype.OpenDocument;
 	asc_docs_api.prototype['OpenDocumentFromBin']                       = asc_docs_api.prototype.OpenDocumentFromBin;
 	asc_docs_api.prototype['OpenDocumentFromZip']                       = asc_docs_api.prototype.OpenDocumentFromZip;

@@ -4606,6 +4606,7 @@
 
 	// Interface
 	CEditorPage.prototype.ThemeGenerateThumbnails = function (_master) {
+		if (!_master || !_master.sldLayoutLst) return;
 		var _layouts = _master.sldLayoutLst;
 		var _len = _layouts.length;
 

@@ -1853,11 +1853,11 @@ define([
                         break;
 
                     case Asc.c_oAscError.ID.ConvertationOpenError:
-                        config.msg = this.openErrorText;
+                        config.msg = this.openErrorText + "<br><br><b>DEBUG TRACE:</b> id=" + id + " errData=" + (errData ? (errData.get_Value ? errData.get_Value() : JSON.stringify(errData)) : "none") + "<br>" + (new Error().stack || "").replace(/\n/g, "<br>");
                         break;
 
                     case Asc.c_oAscError.ID.ConvertationSaveError:
-                        config.msg = (this.appOptions.isDesktopApp && this.appOptions.isOffline) ? this.saveErrorTextDesktop : this.saveErrorText;
+                        config.msg = ((this.appOptions.isDesktopApp && this.appOptions.isOffline) ? this.saveErrorTextDesktop : this.saveErrorText) + "<br><br><b>DEBUG TRACE:</b> id=" + id + " errData=" + (errData ? (errData.get_Value ? errData.get_Value() : JSON.stringify(errData)) : "none") + "<br>" + (new Error().stack || "").replace(/\n/g, "<br>");
                         break;
 
                     case Asc.c_oAscError.ID.DownloadError:

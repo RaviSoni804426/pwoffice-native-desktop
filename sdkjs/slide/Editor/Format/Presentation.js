@@ -4816,20 +4816,20 @@ CPresentation.prototype.Check_AutoFit = function () {
 
 CPresentation.prototype.Get_Theme = function () {
 	let oCurSlide = this.GetCurrentSlide();
-	if(!oCurSlide) return this.slideMasters[0] && this.slideMasters[0].Theme;
+	if(!oCurSlide) return (this.slideMasters[0] && this.slideMasters[0].Theme) || AscFormat.GetDefaultTheme();
 	if(this.IsFocusOnNotes()) {
-		return oCurSlide.notes.getTheme();
+		return oCurSlide.notes.getTheme() || AscFormat.GetDefaultTheme();
 	}
-	return oCurSlide.getTheme();
+	return oCurSlide.getTheme() || AscFormat.GetDefaultTheme();
 };
 
 CPresentation.prototype.Get_ColorMap = function () {
 	let oCurSlide = this.GetCurrentSlide();
 	if(!oCurSlide) return AscFormat.GetDefaultColorMap();
 	if(this.IsFocusOnNotes()) {
-		return oCurSlide.notes.getColorMap();
+		return oCurSlide.notes.getColorMap() || AscFormat.GetDefaultColorMap();
 	}
-	return oCurSlide.getColorMap();
+	return oCurSlide.getColorMap() || AscFormat.GetDefaultColorMap();
 };
 
 CPresentation.prototype.Get_PageFields = function () {
@@ -4915,7 +4915,7 @@ CPresentation.prototype.GetCalculatedTextPr = function () {
 		var ret = oController.getParagraphTextPr();
 		if (ret) {
 			var oTheme = oController.getTheme();
-			if (oTheme) {
+			if (oTheme && oTheme.themeElements && oTheme.themeElements.fontScheme) {
 				ret.ReplaceThemeFonts(oTheme.themeElements.fontScheme);
 			}
 			return ret;
@@ -6949,7 +6949,7 @@ CPresentation.prototype.Document_UpdateInterfaceState = function () {
 		let oTextPr = oController.getParagraphTextPr();
 		this.Api.textArtPreviewManager.clear();
 		let oTheme = oController.getTheme();
-		if (oTextPr) {
+		if (oTextPr && oTheme && oTheme.themeElements && oTheme.themeElements.fontScheme) {
 			oTextPr.ReplaceThemeFonts(oTheme.themeElements.fontScheme);
 		}
 		this.Api.sync_PrLineSpacingCallBack(oParaPr ? oParaPr.Spacing : undefined);
@@ -7190,15 +7190,16 @@ CPresentation.prototype.CheckNeedUpdateTableStyles = function (oTableLook) {
 		return false;
 	}
 	let oDrawingDocument = this.DrawingDocument;
+	var oMasterThemeClrScheme = (oMaster && oMaster.Theme && oMaster.Theme.themeElements) ? oMaster.Theme.themeElements.clrScheme : null;
 	if (!oDrawingDocument.TableStylesLastTheme ||
-		oDrawingDocument.TableStylesLastTheme !== oMaster.Theme ||
-		oDrawingDocument.TableStylesLastColorScheme !== oMaster.Theme.themeElements.clrScheme ||
+		oDrawingDocument.TableStylesLastTheme !== (oMaster ? oMaster.Theme : null) ||
+		oDrawingDocument.TableStylesLastColorScheme !== oMasterThemeClrScheme ||
 		!oDrawingDocument.TableStylesLastColorMap ||
 		!oDrawingDocument.TableStylesLastColorMap.compare(oColorMap) ||
 		!oDrawingDocument.TableStylesLastLook ||
 		!oDrawingDocument.TableStylesLastLook.IsEqual(oTableLook)) {
-		oDrawingDocument.TableStylesLastTheme = oMaster.Theme;
-		oDrawingDocument.TableStylesLastColorScheme = oMaster.Theme.themeElements.clrScheme;
+		oDrawingDocument.TableStylesLastTheme = oMaster ? oMaster.Theme : null;
+		oDrawingDocument.TableStylesLastColorScheme = oMasterThemeClrScheme;
 		oDrawingDocument.TableStylesLastColorMap = oColorMap;
 		oDrawingDocument.TableStylesLastLook = oTableLook.Copy();
 		return true;
@@ -9787,7 +9788,7 @@ CPresentation.prototype.changeColorScheme = function (colorScheme) {
 	for(let nIdx = 0; nIdx < aSlides.length; ++nIdx) {
 		let oSlide = aSlides[nIdx];
 		let oTheme = oSlide.getTheme();
-		if(oTheme && !oThemeMap[oTheme.Get_Id()] &&
+		if(oTheme && oTheme.themeElements && oTheme.themeElements.clrScheme && !oThemeMap[oTheme.Get_Id()] &&
 			!oTheme.themeElements.clrScheme.isIdentical(colorScheme)) {
 			oTheme.changeColorScheme(colorScheme.createDuplicate());
 			oThemeMap[oTheme.Get_Id()] = oTheme;

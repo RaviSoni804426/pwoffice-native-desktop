@@ -240,7 +240,7 @@ MasterSlide.prototype.recalculateBackground = function() {
         else if (this.cSld.Bg.bgRef != null) {
             this.cSld.Bg.bgRef.Color.Calculate(_theme, this, _layout, _master, RGBA);
             RGBA = this.cSld.Bg.bgRef.Color.RGBA;
-            _back_fill = _theme.themeElements.fmtScheme.GetFillStyle(this.cSld.Bg.bgRef.idx, this.cSld.Bg.bgRef.Color);
+            _back_fill = (_theme && _theme.themeElements && _theme.themeElements.fmtScheme) ? _theme.themeElements.fmtScheme.GetFillStyle(this.cSld.Bg.bgRef.idx, this.cSld.Bg.bgRef.Color) : null;
         }
     }
     if (_back_fill != null)
@@ -1021,7 +1021,7 @@ function CMasterThumbnailDrawer()
                 if (_layout.cSld.Bg.bgRef != null) {
                     _layout.cSld.Bg.bgRef.Color.Calculate(_theme, null, _layout, _master, RGBA);
                     RGBA = _layout.cSld.Bg.bgRef.Color.RGBA;
-                    _back_fill = _theme.themeElements.fmtScheme.GetFillStyle(_layout.cSld.Bg.bgRef.idx, _layout.cSld.Bg.bgRef.Color);
+                    _back_fill = (_theme && _theme.themeElements && _theme.themeElements.fmtScheme) ? _theme.themeElements.fmtScheme.GetFillStyle(_layout.cSld.Bg.bgRef.idx, _layout.cSld.Bg.bgRef.Color) : null;
                 }
             }
         } else {
@@ -1033,7 +1033,7 @@ function CMasterThumbnailDrawer()
                         if (_master.cSld.Bg.bgRef != null) {
                             _master.cSld.Bg.bgRef.Color.Calculate(_theme, null, _layout, _master, RGBA);
                             RGBA = _master.cSld.Bg.bgRef.Color.RGBA;
-                            _back_fill = _theme.themeElements.fmtScheme.GetFillStyle(_master.cSld.Bg.bgRef.idx, _master.cSld.Bg.bgRef.Color);
+                            _back_fill = (_theme && _theme.themeElements && _theme.themeElements.fmtScheme) ? _theme.themeElements.fmtScheme.GetFillStyle(_master.cSld.Bg.bgRef.idx, _master.cSld.Bg.bgRef.Color) : null;
                         }
                     }
                 } else {
@@ -1117,14 +1117,16 @@ function CMasterThumbnailDrawer()
 
             var nFontSize = _params[7];
             var _textPr1 = new CTextPr;
-            _textPr1.FontFamily = {Name:_theme.themeElements.fontScheme.majorFont.latin, Index:-1};
-            _textPr1.RFonts.Ascii = {Name: _theme.themeElements.fontScheme.majorFont.latin, Index: -1};
+            var sMajorFont = (_theme && _theme.themeElements && _theme.themeElements.fontScheme && _theme.themeElements.fontScheme.majorFont) ? _theme.themeElements.fontScheme.majorFont.latin : "";
+            var sMinorFont = (_theme && _theme.themeElements && _theme.themeElements.fontScheme && _theme.themeElements.fontScheme.minorFont) ? _theme.themeElements.fontScheme.minorFont.latin : "";
+            _textPr1.FontFamily = {Name: sMajorFont, Index:-1};
+            _textPr1.RFonts.Ascii = {Name: sMajorFont, Index: -1};
             _textPr1.FontSize = nFontSize;
             _textPr1.Color = this.GetTitleTextColor(_master, _layout);
 
             var _textPr2 = new CTextPr;
-            _textPr2.FontFamily = {Name:_theme.themeElements.fontScheme.minorFont.latin, Index:-1};
-            _textPr2.RFonts.Ascii = {Name: _theme.themeElements.fontScheme.minorFont.latin, Index: -1};
+            _textPr2.FontFamily = {Name: sMinorFont, Index:-1};
+            _textPr2.RFonts.Ascii = {Name: sMinorFont, Index: -1};
             _textPr2.FontSize = nFontSize;
             _textPr2.Color = this.GetBodyTextColor(_master, _layout);
             var docContent = new CDocumentContent(editor.WordControl.m_oLogicDocument, editor.WordControl.m_oDrawingDocument, 0, 0, 1000, 1000, false, false, true);
@@ -1201,7 +1203,7 @@ function CMasterThumbnailDrawer()
             if (_layout.cSld.Bg.bgRef != null) {
               _layout.cSld.Bg.bgRef.Color.Calculate(_theme, null, _layout, _master, RGBA);
               RGBA = _layout.cSld.Bg.bgRef.Color.RGBA;
-              _back_fill = _theme.themeElements.fmtScheme.GetFillStyle(_layout.cSld.Bg.bgRef.idx, _layout.cSld.Bg.bgRef.Color);
+              _back_fill = (_theme && _theme.themeElements && _theme.themeElements.fmtScheme) ? _theme.themeElements.fmtScheme.GetFillStyle(_layout.cSld.Bg.bgRef.idx, _layout.cSld.Bg.bgRef.Color) : null;
             }
           }
         } else {
@@ -1213,7 +1215,7 @@ function CMasterThumbnailDrawer()
                 if (_master.cSld.Bg.bgRef != null) {
                   _master.cSld.Bg.bgRef.Color.Calculate(_theme, null, _layout, _master, RGBA);
                   RGBA = _master.cSld.Bg.bgRef.Color.RGBA;
-                  _back_fill = _theme.themeElements.fmtScheme.GetFillStyle(_master.cSld.Bg.bgRef.idx, _master.cSld.Bg.bgRef.Color);
+                  _back_fill = (_theme && _theme.themeElements && _theme.themeElements.fmtScheme) ? _theme.themeElements.fmtScheme.GetFillStyle(_master.cSld.Bg.bgRef.idx, _master.cSld.Bg.bgRef.Color) : null;
                 }
               }
             } else {
@@ -1330,13 +1332,15 @@ function CMasterThumbnailDrawer()
                 nFontSize = 600;
             }
             var _textPr1 = new CTextPr;
-            _textPr1.FontFamily = {Name:_theme.themeElements.fontScheme.majorFont.latin, Index:-1};
-            _textPr1.RFonts.Ascii = {Name: _theme.themeElements.fontScheme.majorFont.latin, Index: -1};
+            var sMajorFont2 = (_theme && _theme.themeElements && _theme.themeElements.fontScheme && _theme.themeElements.fontScheme.majorFont) ? _theme.themeElements.fontScheme.majorFont.latin : "";
+            var sMinorFont2 = (_theme && _theme.themeElements && _theme.themeElements.fontScheme && _theme.themeElements.fontScheme.minorFont) ? _theme.themeElements.fontScheme.minorFont.latin : "";
+            _textPr1.FontFamily = {Name: sMajorFont2, Index:-1};
+            _textPr1.RFonts.Ascii = {Name: sMajorFont2, Index: -1};
             _textPr1.FontSize = nFontSize;
             _textPr1.Color = this.GetTitleTextColor(_master, _layout);
             var _textPr2 = new CTextPr;
-            _textPr2.FontFamily = {Name:_theme.themeElements.fontScheme.minorFont.latin, Index:-1};
-            _textPr2.RFonts.Ascii = {Name: _theme.themeElements.fontScheme.minorFont.latin, Index: -1};
+            _textPr2.FontFamily = {Name: sMinorFont2, Index:-1};
+            _textPr2.RFonts.Ascii = {Name: sMinorFont2, Index: -1};
             _textPr2.FontSize = nFontSize;
             _textPr2.Color = this.GetBodyTextColor(_master, _layout);
             var docContent = new CDocumentContent(editor.WordControl.m_oLogicDocument, editor.WordControl.m_oDrawingDocument, 0, 0, 1000, 1000, false, false, true);

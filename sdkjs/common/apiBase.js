@@ -361,18 +361,21 @@
 			let memoryInfo = AscCommon.getMemoryInfo();
 			lineNumber = undefined !== lineNumber ? lineNumber : "";
 			column = undefined !== column ? column : "";
-			var msg = 'Error: ' + errorMsg + '\n Script: ' + (url || "") + '\n Line: ' + lineNumber + ':' + column +
+			var msg = 'REAL_ERROR_DEBUG: Error: ' + errorMsg + '\n Script: ' + (url || "") + '\n Line: ' + lineNumber + ':' + column +
 				'\n userAgent: ' + (navigator.userAgent || navigator.vendor || window.opera) + '\n platform: ' +
 				navigator.platform + '\n isLoadFullApi: ' + t.isLoadFullApi + '\n isDocumentLoadComplete: ' +
 				t.isDocumentLoadComplete + (editorInfo ? '\n ' + editorInfo : "") +
 				(memoryInfo ? '\n performance.memory: ' + memoryInfo : "") +
-				'\n StackTrace: ' + (stack || "");
-			AscCommon.sendClientLog("error", "changesError: " + msg, t);
-			try { alert("CANARY_DEBUG_TRACE:\n" + msg); } catch(e){}
+				'\n StackTrace:\n' + (stack || "");
+			AscCommon.sendClientLog("error", msg, t);
+			if (window["AscDesktopEditor"] && window["AscDesktopEditor"]["Log"]) {
+				try { window["AscDesktopEditor"]["Log"](msg); } catch(e){}
+			}
+			try { alert(msg); } catch(e){}
 			if (t.isLoadFullApi ) {
 				if(t.isDocumentLoadComplete) {
 					//todo disconnect and downloadAs ability
-					t.sendEvent("asc_onError", Asc.c_oAscError.ID.EditingError, c_oAscError.Level.NoCritical);
+					t.sendEvent("asc_onError", Asc.c_oAscError.ID.EditingError, c_oAscError.Level.NoCritical, msg);
 					if (t.isCoAuthoringEnable) {
 						t.asc_coAuthoringDisconnect();
 					} else {
@@ -380,7 +383,7 @@
 					}
 				}
 				else {
-					t.sendEvent("asc_onError", Asc.c_oAscError.ID.ConvertationOpenError, c_oAscError.Level.Critical);
+					t.sendEvent("asc_onError", Asc.c_oAscError.ID.ConvertationOpenError, c_oAscError.Level.Critical, msg);
 				}
 			}
 		}
@@ -6266,4 +6269,8 @@
 	prot['asc_markAsFinal'] = prot.asc_markAsFinal = prot.markAsFinal;
 	prot['asc_isFinal'] = prot.asc_isFinal = prot.isFinal;
 	prot["getMacroRecorder"] = prot.getMacroRecorder;
-	prot["addMacroStepData"] = prot.addMacro
+	prot["addMacroStepData"] = prot.addMacroStepData;
+	
+	prot['getJsApi'] = prot.getJsApi;
+
+})(window);

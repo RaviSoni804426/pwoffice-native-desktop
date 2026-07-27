@@ -1263,8 +1263,8 @@ AscFormat.InitClass(Slide, AscFormat.CBaseFormatObject, AscDFH.historyitem_type_
         var RGBA = {R:0, G:0, B:0, A:255};
 
         var _layout = this.Layout;
-        var _master = _layout.Master;
-        var _theme = _master.Theme;
+        var _master = _layout ? _layout.Master : null;
+        var _theme = _master ? _master.Theme : null;
         if (this.cSld.Bg != null)
         {
             if (null != this.cSld.Bg.bgPr)
@@ -1273,7 +1273,7 @@ AscFormat.InitClass(Slide, AscFormat.CBaseFormatObject, AscDFH.historyitem_type_
             {
                 this.cSld.Bg.bgRef.Color.Calculate(_theme, this, _layout, _master, RGBA);
                 RGBA = this.cSld.Bg.bgRef.Color.RGBA;
-                _back_fill = _theme.themeElements.fmtScheme.GetFillStyle(this.cSld.Bg.bgRef.idx, this.cSld.Bg.bgRef.Color);
+                _back_fill = (_theme && _theme.themeElements && _theme.themeElements.fmtScheme) ? _theme.themeElements.fmtScheme.GetFillStyle(this.cSld.Bg.bgRef.idx, this.cSld.Bg.bgRef.Color) : null;
             }
         }
         else
@@ -1288,7 +1288,7 @@ AscFormat.InitClass(Slide, AscFormat.CBaseFormatObject, AscDFH.historyitem_type_
                     {
                         _layout.cSld.Bg.bgRef.Color.Calculate(_theme, this, _layout, _master, RGBA);
                         RGBA = _layout.cSld.Bg.bgRef.Color.RGBA;
-                        _back_fill = _theme.themeElements.fmtScheme.GetFillStyle(_layout.cSld.Bg.bgRef.idx, _layout.cSld.Bg.bgRef.Color);
+                        _back_fill = (_theme && _theme.themeElements && _theme.themeElements.fmtScheme) ? _theme.themeElements.fmtScheme.GetFillStyle(_layout.cSld.Bg.bgRef.idx, _layout.cSld.Bg.bgRef.Color) : null;
                     }
                 }
                 else if (_master != null)
@@ -1301,7 +1301,7 @@ AscFormat.InitClass(Slide, AscFormat.CBaseFormatObject, AscDFH.historyitem_type_
                         {
                             _master.cSld.Bg.bgRef.Color.Calculate(_theme, this, _layout, _master, RGBA);
                             RGBA = _master.cSld.Bg.bgRef.Color.RGBA;
-                            _back_fill = _theme.themeElements.fmtScheme.GetFillStyle(_master.cSld.Bg.bgRef.idx, _master.cSld.Bg.bgRef.Color);
+                            _back_fill = (_theme && _theme.themeElements && _theme.themeElements.fmtScheme) ? _theme.themeElements.fmtScheme.GetFillStyle(_master.cSld.Bg.bgRef.idx, _master.cSld.Bg.bgRef.Color) : null;
                         }
                     }
                     else

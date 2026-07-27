@@ -1908,7 +1908,9 @@ Paragraph.prototype.GetNumberingTextPr = function()
 	// TODO: Пока возвращаем всегда шрифт лежащий в Ascii, в будущем надо будет это переделать
 	if (undefined !== numTextPr.RFonts && null !== numTextPr.RFonts)
 	{
-		numTextPr.ReplaceThemeFonts(this.GetTheme().themeElements.fontScheme);
+		var oTheme1 = this.GetTheme();
+		if (oTheme1 && oTheme1.themeElements && oTheme1.themeElements.fontScheme)
+			numTextPr.ReplaceThemeFonts(oTheme1.themeElements.fontScheme);
 
 		if (!numTextPr.FontFamily)
 			numTextPr.FontFamily = {Name : "", Index : -1};
@@ -4518,7 +4520,9 @@ Paragraph.prototype.Internal_CalculateTextPr = function(LetterPos, StartPr)
 	// TODO: Пока возвращаем всегда шрифт лежащий в Ascii, в будущем надо будет это переделать
 	if (undefined !== TextPr.RFonts && null !== TextPr.RFonts)
 	{
-		TextPr.ReplaceThemeFonts(this.GetTheme().themeElements.fontScheme);
+		var oTheme2 = this.GetTheme();
+		if (oTheme2 && oTheme2.themeElements && oTheme2.themeElements.fontScheme)
+			TextPr.ReplaceThemeFonts(oTheme2.themeElements.fontScheme);
 
 		if (!TextPr.FontFamily)
 			TextPr.FontFamily = {Name : "", Index : -1};
@@ -9899,7 +9903,9 @@ Paragraph.prototype.GetCalculatedTextPr = function()
 	// TODO: Пока возвращаем всегда шрифт лежащий в Ascii, в будущем надо будет это переделать
 	if (undefined !== TextPr.RFonts && null !== TextPr.RFonts)
 	{
-		TextPr.ReplaceThemeFonts(this.GetTheme().themeElements.fontScheme);
+		var oTheme3 = this.GetTheme();
+		if (oTheme3 && oTheme3.themeElements && oTheme3.themeElements.fontScheme)
+			TextPr.ReplaceThemeFonts(oTheme3.themeElements.fontScheme);
 
 		if (!TextPr.FontFamily)
 			TextPr.FontFamily = {Name : "", Index : -1};
@@ -12742,7 +12748,8 @@ Paragraph.prototype.Document_CreateFontMap = function(FontMap)
 
 		this.private_CompileParaPr();
 
-		var FontScheme = this.Get_Theme().themeElements.fontScheme;
+		var oTheme4 = this.Get_Theme();
+		var FontScheme = (oTheme4 && oTheme4.themeElements) ? oTheme4.themeElements.fontScheme : null;
 		var CurTextPr  = this.CompiledPr.Pr.TextPr.Copy();
 
 		CurTextPr.Document_CreateFontMap(this.FontMap.Map, FontScheme);
@@ -13515,12 +13522,16 @@ Paragraph.prototype.Supplement_FramePr = function(FramePr)
 		}
 
 		var TextPr = FirstFramePara.GetFirstRunPr();
-		TextPr.ReplaceThemeFonts(this.GetTheme().themeElements.fontScheme);
+		var oTheme5 = this.GetTheme();
+		var fontScheme5 = (oTheme5 && oTheme5.themeElements) ? oTheme5.themeElements.fontScheme : null;
+		if (fontScheme5)
+			TextPr.ReplaceThemeFonts(fontScheme5);
 
 		if (undefined === TextPr.RFonts || undefined === TextPr.RFonts.Ascii)
 		{
 			TextPr = this.Get_CompiledPr2(false).TextPr;
-			TextPr.ReplaceThemeFonts(this.GetTheme().themeElements.fontScheme);
+			if (fontScheme5)
+				TextPr.ReplaceThemeFonts(fontScheme5);
 		}
 
 		FramePr.FontFamily = {

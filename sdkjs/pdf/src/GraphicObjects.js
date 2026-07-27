@@ -453,7 +453,39 @@
                         }
                         else {
                             let oMainObj = oTargetTextObject;
-                            while (!oMainObj.SetNeedRecalc) {
+                            
+            let __cb_start_1 = Date.now();
+            let __cb_iters_1 = 0;
+            
+            let __cb_start_1 = Date.now();
+            let __cb_iters_1 = 0;
+            while (!oMainObj.SetNeedRecalc) {
+                if (++__cb_iters_1 > 10000 || (Date.now() - __cb_start_1) > 5000) {
+                    try {
+                        var state = { "oMainObj": (typeof oMainObj !== 'undefined' ? (typeof oMainObj === 'object' && oMainObj !== null ? (typeof oMainObj.toString === 'function' && oMainObj.toString() !== '[object Object]' ? oMainObj.toString() : JSON.stringify(oMainObj, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oMainObj) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "GraphicObjects.js",
+                            condition: "!oMainObj.SetNeedRecalc",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_1 > 10000 || (Date.now() - __cb_start_1) > 5000) {
+                    try {
+                        var state = { "oMainObj": (typeof oMainObj !== 'undefined' ? (typeof oMainObj === 'object' && oMainObj !== null ? (typeof oMainObj.toString === 'function' && oMainObj.toString() !== '[object Object]' ? oMainObj.toString() : JSON.stringify(oMainObj, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oMainObj) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "GraphicObjects.js",
+                            condition: "!oMainObj.SetNeedRecalc",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
                                 oMainObj = oMainObj.parent;
                             }
 
@@ -1910,7 +1942,39 @@
 					return;
 				}
 				
-                while (!oObject.AddToRedraw) {
+                
+            let __cb_start_2 = Date.now();
+            let __cb_iters_2 = 0;
+            
+            let __cb_start_2 = Date.now();
+            let __cb_iters_2 = 0;
+            while (!oObject.AddToRedraw) {
+                if (++__cb_iters_2 > 10000 || (Date.now() - __cb_start_2) > 5000) {
+                    try {
+                        var state = { "oObject": (typeof oObject !== 'undefined' ? (typeof oObject === 'object' && oObject !== null ? (typeof oObject.toString === 'function' && oObject.toString() !== '[object Object]' ? oObject.toString() : JSON.stringify(oObject, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oObject) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "GraphicObjects.js",
+                            condition: "!oObject.AddToRedraw",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_2 > 10000 || (Date.now() - __cb_start_2) > 5000) {
+                    try {
+                        var state = { "oObject": (typeof oObject !== 'undefined' ? (typeof oObject === 'object' && oObject !== null ? (typeof oObject.toString === 'function' && oObject.toString() !== '[object Object]' ? oObject.toString() : JSON.stringify(oObject, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oObject) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "GraphicObjects.js",
+                            condition: "!oObject.AddToRedraw",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
                     if (oObject.GetParent) {
                         oObject = oObject.GetParent();
                     }

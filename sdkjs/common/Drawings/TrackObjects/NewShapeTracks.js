@@ -180,7 +180,7 @@ function NewShapeTrack(presetGeom, startX, startY, theme, master, layout, slide,
             this.arrowsCount = 2;
         }
 
-        var spDef = theme.spDef;
+        var spDef = theme ? theme.spDef : null;
         let isTextRect = presetGeom && (presetGeom.indexOf("textRect") === 0);
         if(!isTextRect)
         {
@@ -207,7 +207,7 @@ function NewShapeTrack(presetGeom, startX, startY, theme, master, layout, slide,
                 brush.fill.color = style.fillRef.Color.createDuplicate();
             }
         }
-        var pen = theme.getLnStyle(style.lnRef.idx, style.lnRef.Color);
+        var pen = theme ? theme.getLnStyle(style.lnRef.idx, style.lnRef.Color) : new AscFormat.CLn();
         style.lnRef.Color.Calculate(theme, slide, layout, master);
         RGBA = style.lnRef.Color.RGBA;
 

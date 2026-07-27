@@ -482,7 +482,39 @@
                 let y = start[1];
                 let dist = 0;
     
-                while (dist < length) {
+                
+            let __cb_start_1 = Date.now();
+            let __cb_iters_1 = 0;
+            
+            let __cb_start_1 = Date.now();
+            let __cb_iters_1 = 0;
+            while (dist < length) {
+                if (++__cb_iters_1 > 10000 || (Date.now() - __cb_start_1) > 5000) {
+                    try {
+                        var state = { "dist": (typeof dist !== 'undefined' ? (typeof dist === 'object' && dist !== null ? (typeof dist.toString === 'function' && dist.toString() !== '[object Object]' ? dist.toString() : JSON.stringify(dist, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : dist) : 'undefined'), "length": (typeof length !== 'undefined' ? (typeof length === 'object' && length !== null ? (typeof length.toString === 'function' && length.toString() !== '[object Object]' ? length.toString() : JSON.stringify(length, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : length) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "graphics.js",
+                            condition: "dist < length",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_1 > 10000 || (Date.now() - __cb_start_1) > 5000) {
+                    try {
+                        var state = { "dist": (typeof dist !== 'undefined' ? (typeof dist === 'object' && dist !== null ? (typeof dist.toString === 'function' && dist.toString() !== '[object Object]' ? dist.toString() : JSON.stringify(dist, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : dist) : 'undefined'), "length": (typeof length !== 'undefined' ? (typeof length === 'object' && length !== null ? (typeof length.toString === 'function' && length.toString() !== '[object Object]' ? length.toString() : JSON.stringify(length, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : length) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "graphics.js",
+                            condition: "dist < length",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
                     ctx.moveTo(x, y);
                     x += (dx / length) * w_dot;
                     y += (dy / length) * w_dot;

@@ -417,6 +417,7 @@ int CApplicationCEF::Init_CEF(CAscApplicationManager* pManager, int argc, char* 
 #endif
 
 	m_pInternal->context->PopulateSettings(&settings);
+	settings.remote_debugging_port = 9222;
 
 	bool isMultithreaded = false;
 #ifdef WIN32

@@ -107,7 +107,7 @@
 		if (cellName === "LineColor") {
 			quickStyleCellName = "QuickStyleLineColor";
 			quickStyleModifiersCellName = "QuickStyleLineMatrix";
-			getModifiersMethod = themes[0].getLnStyle;
+			getModifiersMethod = (themes && themes[0]) ? themes[0].getLnStyle : null;
 			isLineIdx = true;
 
 			initialDefaultValue = AscFormat.CreateUnfilFromRGB(0,0,0);
@@ -143,7 +143,7 @@
 			// use QuickStyleLineColor to calculate all line params
 			quickStyleCellName = "QuickStyleLineColor";
 			quickStyleModifiersCellName = "QuickStyleLineMatrix";
-			getModifiersMethod = themes[0].getLnStyle;
+			getModifiersMethod = (themes && themes[0]) ? themes[0].getLnStyle : null;
 			isLineIdx = true;
 
 			initialDefaultValue = 1; // visio solid
@@ -151,7 +151,7 @@
 			// line weight in inches
 			quickStyleCellName = "QuickStyleLineColor";
 			quickStyleModifiersCellName = "QuickStyleLineMatrix";
-			getModifiersMethod = themes[0].getLnStyle;
+			getModifiersMethod = (themes && themes[0]) ? themes[0].getLnStyle : null;
 			isLineIdx = true;
 
 			// // 9255 emus = 0.01041666666666667 inches is document.xml StyleSheet ID=0 LineWeight e. g. default value

@@ -5081,6 +5081,14 @@ virtual bool OnConsoleMessage(CefRefPtr<CefBrowser> browser,
 							  const CefString& source,
 							  int line) OVERRIDE
 {
+	std::wstring sMsg = message.ToWString();
+	std::wstring sSrc = source.ToWString();
+	std::wstring sLine = L"[CONSOLE] (" + sSrc + L":" + std::to_wstring(line) + L") " + sMsg + L"\r\n";
+	NSFile::CFileBinary oFile;
+	oFile.OpenFile(L"C:\\Users\\rk871\\AppData\\Local\\ONLYOFFICE\\DesktopEditors\\data\\real_error.log", true);
+	oFile.SeekAsStringUTF8(0, 2);
+	oFile.WriteStringUTF8(sLine);
+	oFile.CloseFile();
 	return false;
 }
 

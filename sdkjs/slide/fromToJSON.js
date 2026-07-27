@@ -202,6 +202,7 @@
 	};
 	WriterToJSON.prototype.SerNotes = function(oNote)
 	{
+		if (!oNote) return null;
 		return {
 			"lock":             undefined, /// ??? probably not needed
 			"clrMapOvr":        this.SerColorMapOvr(oNote.clrMap),
@@ -209,7 +210,7 @@
 			"cSld":             this.SerCSld(oNote.cSld),
 			"showMasterPhAnim": oNote.showMasterPhAnim,
 			"showMasterSp":     oNote.showMasterSp,
-			"master":           this.notesMasterMap[oNote.Master.Id] ? oNote.Master.Id : this.SerNotesMaster(oNote.Master)
+			"master":           (oNote && oNote.Master) ? (this.notesMasterMap[oNote.Master.Id] ? oNote.Master.Id : this.SerNotesMaster(oNote.Master)) : null
 		}
 	};
 	WriterToJSON.prototype.SerSldComments = function(oSldComments)
@@ -351,59 +352,59 @@
 		}
 
 		return {
-			"id":               oLayout.Id,
-			"master":           bWriteMaster ? this.SerMasterSlide(oLayout.Master, false) : oLayout.Master.Id,
-			"clrMapOvr":        this.SerColorMapOvr(oLayout.clrMap),
-			"cSld":             this.SerCSld(oLayout.cSld),
-			"hf":               this.SerHF(oLayout.hf),
-			"timing":           this.SerTiming(oLayout.timing),
-			"transition":       this.SerTransition(oLayout.transition),
-			"matchingName":     oLayout.matchingName,
-			"preserve":         oLayout.preserve,
-			"showMasterPhAnim": oLayout.showMasterPhAnim,
-			"showMasterSp":     oLayout.showMasterSp,
-			"userDrawn":        oLayout.userDrawn,
+			"id":               oLayout ? oLayout.Id : null,
+			"master":           bWriteMaster ? (oLayout && oLayout.Master ? this.SerMasterSlide(oLayout.Master, false) : null) : (oLayout && oLayout.Master ? oLayout.Master.Id : null),
+			"clrMapOvr":        this.SerColorMapOvr(oLayout ? oLayout.clrMap : null),
+			"cSld":             this.SerCSld(oLayout ? oLayout.cSld : null),
+			"hf":               this.SerHF(oLayout ? oLayout.hf : null),
+			"timing":           this.SerTiming(oLayout ? oLayout.timing : null),
+			"transition":       this.SerTransition(oLayout ? oLayout.transition : null),
+			"matchingName":     oLayout ? oLayout.matchingName : null,
+			"preserve":         oLayout ? oLayout.preserve : null,
+			"showMasterPhAnim": oLayout ? oLayout.showMasterPhAnim : null,
+			"showMasterSp":     oLayout ? oLayout.showMasterSp : null,
+			"userDrawn":        oLayout ? oLayout.userDrawn : null,
 			"ltType":           sLayoutType,
-			"imgBase64":        oLayout.ImageBase64,
+			"imgBase64":        oLayout ? oLayout.ImageBase64 : null,
 			"type":             "sldLayout"
 		}
 	};
 	WriterToJSON.prototype.SerMasterSlide = function(oMaster, bWriteAllMasLayouts)
 	{
 		var aLayoutLst = [];
-		if (bWriteAllMasLayouts)
+		if (bWriteAllMasLayouts && oMaster && oMaster.sldLayoutLst)
 		{
 			for (var nLayout = 0; nLayout < oMaster.sldLayoutLst.length; nLayout++)
 				aLayoutLst.push(this.SerSlideLayout(oMaster.sldLayoutLst[nLayout], false));
 		}
 
 		return {
-			"id":               oMaster.Id,
-			"theme":            this.SerTheme(oMaster.Theme),
-			"clrMapOvr":        this.SerColorMapOvr(oMaster.clrMap),
-			"cSld":             this.SerCSld(oMaster.cSld),
-			"hf":               this.SerHF(oMaster.hf),
+			"id":               oMaster ? oMaster.Id : null,
+			"theme":            this.SerTheme(oMaster ? oMaster.Theme : null),
+			"clrMapOvr":        this.SerColorMapOvr(oMaster ? oMaster.clrMap : null),
+			"cSld":             this.SerCSld(oMaster ? oMaster.cSld : null),
+			"hf":               this.SerHF(oMaster ? oMaster.hf : null),
 			"sldLayoutLst":     aLayoutLst,
-			"timing":           this.SerTiming(oMaster.timing),
-			"transition":       this.SerTransition(oMaster.transition),
-			"txStyles":         this.SerTxStyles(oMaster.txStyles),
-			"preserve":         oMaster.preserve,
-			"imgBase64":        oMaster.ImageBase64,
+			"timing":           this.SerTiming(oMaster ? oMaster.timing : null),
+			"transition":       this.SerTransition(oMaster ? oMaster.transition : null),
+			"txStyles":         this.SerTxStyles(oMaster ? oMaster.txStyles : null),
+			"preserve":         oMaster ? oMaster.preserve : null,
+			"imgBase64":        oMaster ? oMaster.ImageBase64 : null,
 			"type":             "sldMaster"
 		}
 	};
 	WriterToJSON.prototype.SerSlide = function(oSlide, bWriteLayout, bWriteMaster, bWriteAllMasLayouts)
 	{
-		var oMaster = oSlide.Layout.Master.Id;
-		var oLayout = oSlide.Layout.Id;
+		var oMaster = (oSlide.Layout && oSlide.Layout.Master) ? oSlide.Layout.Master.Id : null;
+		var oLayout = oSlide.Layout ? oSlide.Layout.Id : null;
 
 		// No point in carrying master with slide without layout
 		if (bWriteLayout || (bWriteMaster && bWriteAllMasLayouts))
 		{
-			if (bWriteMaster)
+			if (bWriteMaster && oSlide.Layout && oSlide.Layout.Master)
 				oMaster = this.SerMasterSlide(oSlide.Layout.Master, bWriteAllMasLayouts);
 
-			if (!bWriteAllMasLayouts)
+			if (!bWriteAllMasLayouts && oSlide.Layout)
 				oLayout = this.SerSlideLayout(oSlide.Layout, false);
 		}
 

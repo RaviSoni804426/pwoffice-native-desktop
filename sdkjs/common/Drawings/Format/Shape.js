@@ -3137,7 +3137,7 @@
 			var compiled_style = this.getCompiledStyle();
 			var RGBA = {R: 0, G: 0, B: 0, A: 255};
 			var parents = this.getParentObjects();
-			if (isRealObject(parents.theme) && isRealObject(compiled_style) && isRealObject(compiled_style.lnRef)) {
+			if (isRealObject(parents) && isRealObject(parents.theme) && typeof parents.theme.getLnStyle === "function" && isRealObject(compiled_style) && isRealObject(compiled_style.lnRef)) {
 				//compiled_style.lnRef.Color.Calculate(parents.theme, parents.slide, parents.layout, parents.master, {R: 0, G: 0, B: 0, A:255});
 				//RGBA = compiled_style.lnRef.Color.RGBA;
 				// compiled_style is default style

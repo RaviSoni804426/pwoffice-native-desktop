@@ -1310,6 +1310,11 @@ function CBinaryFileWriter()
     this.WriteTheme = function(_theme)
     {
         this.StartRecord(c_oMainTables.Themes);
+        if (!_theme)
+        {
+            this.EndRecord();
+            return;
+        }
 
         this.WriteUChar(g_nodeAttributeStart);
         this._WriteString2(0, _theme.name);

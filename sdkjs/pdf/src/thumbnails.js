@@ -98,8 +98,40 @@
         if (AscCommon.AscBrowser.isSafariMacOs)
             whiteLimit = 250; // BUG 67674
 
-        while (index < indexLast)
+        
+            let __cb_start_1 = Date.now();
+            let __cb_iters_1 = 0;
+            
+            let __cb_start_1 = Date.now();
+            let __cb_iters_1 = 0;
+            while (index < indexLast)
         {
+                if (++__cb_iters_1 > 10000 || (Date.now() - __cb_start_1) > 5000) {
+                    try {
+                        var state = { "index": (typeof index !== 'undefined' ? (typeof index === 'object' && index !== null ? (typeof index.toString === 'function' && index.toString() !== '[object Object]' ? index.toString() : JSON.stringify(index, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : index) : 'undefined'), "indexLast": (typeof indexLast !== 'undefined' ? (typeof indexLast === 'object' && indexLast !== null ? (typeof indexLast.toString === 'function' && indexLast.toString() !== '[object Object]' ? indexLast.toString() : JSON.stringify(indexLast, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : indexLast) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "thumbnails.js",
+                            condition: "index < indexLast",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_1 > 10000 || (Date.now() - __cb_start_1) > 5000) {
+                    try {
+                        var state = { "index": (typeof index !== 'undefined' ? (typeof index === 'object' && index !== null ? (typeof index.toString === 'function' && index.toString() !== '[object Object]' ? index.toString() : JSON.stringify(index, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : index) : 'undefined'), "indexLast": (typeof indexLast !== 'undefined' ? (typeof indexLast === 'object' && indexLast !== null ? (typeof indexLast.toString === 'function' && indexLast.toString() !== '[object Object]' ? indexLast.toString() : JSON.stringify(indexLast, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : indexLast) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "thumbnails.js",
+                            condition: "index < indexLast",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
             if (pixels[index] < whiteLimit || pixels[index + 1] < whiteLimit || pixels[index + 2] < whiteLimit)
                 break;
             index += 4;

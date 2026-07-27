@@ -84,7 +84,7 @@
 			var style = this.style;
 			style.fillRef.Color.Calculate(theme, slide, layout, master, {R: 0, G: 0, B: 0, A: 255});
 			var RGBA = style.fillRef.Color.RGBA;
-			var pen = theme.getLnStyle(style.lnRef.idx, style.lnRef.Color);
+			var pen = theme ? theme.getLnStyle(style.lnRef.idx, style.lnRef.Color) : new AscFormat.CLn();
 			style.lnRef.Color.Calculate(theme, slide, layout, master);
 			RGBA = style.lnRef.Color.RGBA;
 

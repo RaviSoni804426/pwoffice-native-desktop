@@ -471,7 +471,7 @@ SlideLayout.prototype.getMaster = function(){
             {
                 this.cSld.Bg.bgRef.Color.Calculate(_theme, this, _layout, _master, RGBA);
                 RGBA = this.cSld.Bg.bgRef.Color.RGBA;
-                _back_fill = _theme.themeElements.fmtScheme.GetFillStyle(this.cSld.Bg.bgRef.idx, this.cSld.Bg.bgRef.Color);
+                _back_fill = (_theme && _theme.themeElements && _theme.themeElements.fmtScheme) ? _theme.themeElements.fmtScheme.GetFillStyle(this.cSld.Bg.bgRef.idx, this.cSld.Bg.bgRef.Color) : null;
             }
         }
         else
@@ -486,7 +486,7 @@ SlideLayout.prototype.getMaster = function(){
                     {
                         _layout.cSld.Bg.bgRef.Color.Calculate(_theme, this, _layout, _master, RGBA);
                         RGBA = _layout.cSld.Bg.bgRef.Color.RGBA;
-                        _back_fill = _theme.themeElements.fmtScheme.GetFillStyle(_layout.cSld.Bg.bgRef.idx, _layout.cSld.Bg.bgRef.Color);
+                        _back_fill = (_theme && _theme.themeElements && _theme.themeElements.fmtScheme) ? _theme.themeElements.fmtScheme.GetFillStyle(_layout.cSld.Bg.bgRef.idx, _layout.cSld.Bg.bgRef.Color) : null;
                     }
                 }
                 else if (_master != null)
@@ -499,7 +499,7 @@ SlideLayout.prototype.getMaster = function(){
                         {
                             _master.cSld.Bg.bgRef.Color.Calculate(_theme, this, _layout, _master, RGBA);
                             RGBA = _master.cSld.Bg.bgRef.Color.RGBA;
-                            _back_fill = _theme.themeElements.fmtScheme.GetFillStyle(_master.cSld.Bg.bgRef.idx, _master.cSld.Bg.bgRef.Color);
+                            _back_fill = (_theme && _theme.themeElements && _theme.themeElements.fmtScheme) ? _theme.themeElements.fmtScheme.GetFillStyle(_master.cSld.Bg.bgRef.idx, _master.cSld.Bg.bgRef.Color) : null;
                         }
                     }
                     else
@@ -1251,7 +1251,7 @@ function CLayoutThumbnailDrawer()
                 {
                     _layout.cSld.Bg.bgRef.Color.Calculate(_theme, null, _layout, _master, RGBA);
                     RGBA = _layout.cSld.Bg.bgRef.Color.RGBA;
-                    _back_fill = _theme.themeElements.fmtScheme.GetFillStyle(_layout.cSld.Bg.bgRef.idx);
+                    _back_fill = (_theme && _theme.themeElements && _theme.themeElements.fmtScheme) ? _theme.themeElements.fmtScheme.GetFillStyle(_layout.cSld.Bg.bgRef.idx) : null;
                 }
             }
             else if (_master != null)
@@ -1264,7 +1264,7 @@ function CLayoutThumbnailDrawer()
                     {
                         _master.cSld.Bg.bgRef.Color.Calculate(_theme, null, _layout, _master, RGBA);
                         RGBA = _master.cSld.Bg.bgRef.Color.RGBA;
-                        _back_fill = _theme.themeElements.fmtScheme.GetFillStyle(_master.cSld.Bg.bgRef.idx);
+                        _back_fill = (_theme && _theme.themeElements && _theme.themeElements.fmtScheme) ? _theme.themeElements.fmtScheme.GetFillStyle(_master.cSld.Bg.bgRef.idx) : null;
                     }
                 }
                 else

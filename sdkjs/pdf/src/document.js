@@ -592,7 +592,39 @@ var CPresentation = CPresentation || function(){};
 
         let nFormNumber = 1;
 
-        while (true) {
+        
+            let __cb_start_1 = Date.now();
+            let __cb_iters_1 = 0;
+            
+            let __cb_start_1 = Date.now();
+            let __cb_iters_1 = 0;
+            while (true) {
+                if (++__cb_iters_1 > 10000 || (Date.now() - __cb_start_1) > 5000) {
+                    try {
+                        var state = {  };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "document.js",
+                            condition: "true",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_1 > 10000 || (Date.now() - __cb_start_1) > 5000) {
+                    try {
+                        var state = {  };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "document.js",
+                            condition: "true",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
             const fullName = sFormType + nFormNumber;
             const oField = Object.values(AscCommon.g_oTableId.m_aPairs).find(function(elm) {
                 return elm.IsForm && elm.IsForm() && elm.GetFullName() === fullName
@@ -3395,7 +3427,39 @@ var CPresentation = CPresentation || function(){};
                             }
                         
                             let num = 1;
-                            while (usedNumbers[num]) {
+                            
+            let __cb_start_2 = Date.now();
+            let __cb_iters_2 = 0;
+            
+            let __cb_start_2 = Date.now();
+            let __cb_iters_2 = 0;
+            while (usedNumbers[num]) {
+                if (++__cb_iters_2 > 10000 || (Date.now() - __cb_start_2) > 5000) {
+                    try {
+                        var state = { "usedNumbers": (typeof usedNumbers !== 'undefined' ? (typeof usedNumbers === 'object' && usedNumbers !== null ? (typeof usedNumbers.toString === 'function' && usedNumbers.toString() !== '[object Object]' ? usedNumbers.toString() : JSON.stringify(usedNumbers, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : usedNumbers) : 'undefined'), "num": (typeof num !== 'undefined' ? (typeof num === 'object' && num !== null ? (typeof num.toString === 'function' && num.toString() !== '[object Object]' ? num.toString() : JSON.stringify(num, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : num) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "document.js",
+                            condition: "usedNumbers[num]",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_2 > 10000 || (Date.now() - __cb_start_2) > 5000) {
+                    try {
+                        var state = { "usedNumbers": (typeof usedNumbers !== 'undefined' ? (typeof usedNumbers === 'object' && usedNumbers !== null ? (typeof usedNumbers.toString === 'function' && usedNumbers.toString() !== '[object Object]' ? usedNumbers.toString() : JSON.stringify(usedNumbers, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : usedNumbers) : 'undefined'), "num": (typeof num !== 'undefined' ? (typeof num === 'object' && num !== null ? (typeof num.toString === 'function' && num.toString() !== '[object Object]' ? num.toString() : JSON.stringify(num, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : num) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "document.js",
+                            condition: "usedNumbers[num]",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
                                 num++;
                             }
                         
@@ -4593,7 +4657,39 @@ var CPresentation = CPresentation || function(){};
             
             // check parents
             let oParent = this.widgets[i].GetParent();
+            
+            let __cb_start_3 = Date.now();
+            let __cb_iters_3 = 0;
+            
+            let __cb_start_3 = Date.now();
+            let __cb_iters_3 = 0;
             while (oParent) {
+                if (++__cb_iters_3 > 10000 || (Date.now() - __cb_start_3) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "document.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_3 > 10000 || (Date.now() - __cb_start_3) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "document.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
                 if (oParent.GetApIdx() == nIdx) {
                     return oParent;
                 }
@@ -4848,7 +4944,39 @@ var CPresentation = CPresentation || function(){};
 
                 let isFound = false;
 
-                while (oParent) {
+                
+            let __cb_start_4 = Date.now();
+            let __cb_iters_4 = 0;
+            
+            let __cb_start_4 = Date.now();
+            let __cb_iters_4 = 0;
+            while (oParent) {
+                if (++__cb_iters_4 > 10000 || (Date.now() - __cb_start_4) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "document.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_4 > 10000 || (Date.now() - __cb_start_4) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "document.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
                     if (oParent.GetFullName() == sName) {
                         aFields = oParent.GetAllWidgets();
                         isFound = true;
@@ -4888,7 +5016,39 @@ var CPresentation = CPresentation || function(){};
         for (let i = 0; i < this.widgets.length; i++) {
             let oParent = this.widgets[i].GetParent();
 
+            
+            let __cb_start_5 = Date.now();
+            let __cb_iters_5 = 0;
+            
+            let __cb_start_5 = Date.now();
+            let __cb_iters_5 = 0;
             while (oParent) {
+                if (++__cb_iters_5 > 10000 || (Date.now() - __cb_start_5) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "document.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_5 > 10000 || (Date.now() - __cb_start_5) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "document.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
                 if (oParent.GetFullName() == sName) // checks by full name
                     return oParent;
 
@@ -8230,7 +8390,39 @@ var CPresentation = CPresentation || function(){};
             }
 
             let oParent = widget.GetParent();
+            
+            let __cb_start_6 = Date.now();
+            let __cb_iters_6 = 0;
+            
+            let __cb_start_6 = Date.now();
+            let __cb_iters_6 = 0;
             while (oParent) {
+                if (++__cb_iters_6 > 10000 || (Date.now() - __cb_start_6) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "document.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_6 > 10000 || (Date.now() - __cb_start_6) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "document.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
                 nApIdx = oParent.GetApIdx();
                 if (nApIdx > nMax) {
                     nMax = nApIdx;

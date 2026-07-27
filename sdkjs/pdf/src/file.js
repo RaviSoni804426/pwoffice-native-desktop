@@ -39,13 +39,17 @@
     function TextStreamReader(data, size)
     {
         this.data = data;
-        this.size = size;
+        this.size = (size !== undefined && size !== null) ? size : (data ? data.length : 0);
         this.pos = 0;
 
         this.Seek = function(pos)
         {
+            if (pos < 0) pos = 0;
             if (pos > this.size)
+            {
+                this.pos = this.size;
                 return 1;
+            }
             this.pos = pos;
             return 0;
         };
@@ -56,12 +60,21 @@
         // 1 bytes
         this.GetChar = function()
         {
+            if (this.pos >= this.size || !this.data)
+                return 0;
             return this.data[this.pos++];
         };
         // 4 byte
         this.GetLong = function()
         {
-            return (this.data[this.pos++] | this.data[this.pos++] << 8 | this.data[this.pos++] << 16 | this.data[this.pos++] << 24);
+            if (this.pos + 4 > this.size || !this.data)
+            {
+                this.pos = this.size;
+                return 0;
+            }
+            var val = (this.data[this.pos] | this.data[this.pos+1] << 8 | this.data[this.pos+2] << 16 | this.data[this.pos+3] << 24);
+            this.pos += 4;
+            return val;
         };
         this.GetDouble = function()
         {
@@ -253,6 +266,9 @@
 	};
 	CFile.prototype.isValid = function()
 	{
+		// Password-protected files are valid even before pages are loaded
+		if (this._isPasswordProtected)
+			return true;
 		return this.pages.length > 0;
 	};
 
@@ -712,8 +728,40 @@ void main() {\n\
         let _minLinePos = 0;
         let tmp = 0;
 
-        while (stream.pos < stream.size)
+        
+            let __cb_start_1 = Date.now();
+            let __cb_iters_1 = 0;
+            
+            let __cb_start_1 = Date.now();
+            let __cb_iters_1 = 0;
+            while (stream.pos < stream.size)
         {
+                if (++__cb_iters_1 > 10000 || (Date.now() - __cb_start_1) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_1 > 10000 || (Date.now() - __cb_start_1) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
             _lineEx = 1;
             _lineEy = 0;
             _linePrevCharX = 0;
@@ -1013,8 +1061,40 @@ void main() {\n\
 
         let oDoc = this.viewer.getPDFDoc();
 
-        while (stream.pos < stream.size)
+        
+            let __cb_start_2 = Date.now();
+            let __cb_iters_2 = 0;
+            
+            let __cb_start_2 = Date.now();
+            let __cb_iters_2 = 0;
+            while (stream.pos < stream.size)
         {
+                if (++__cb_iters_2 > 10000 || (Date.now() - __cb_start_2) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_2 > 10000 || (Date.now() - __cb_start_2) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
             _numLine++;
             stream.Skip(8);
             if (stream.GetChar())
@@ -1049,8 +1129,40 @@ void main() {\n\
             if (!stream) {
                 return;
             }
+            
+            let __cb_start_3 = Date.now();
+            let __cb_iters_3 = 0;
+            
+            let __cb_start_3 = Date.now();
+            let __cb_iters_3 = 0;
             while (stream.pos < stream.size)
             {
+                if (++__cb_iters_3 > 10000 || (Date.now() - __cb_start_3) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_3 > 10000 || (Date.now() - __cb_start_3) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
                 _numLine++;
                 stream.Skip(8);
                 if (stream.GetChar())
@@ -1140,8 +1252,40 @@ void main() {\n\
             let _arrayGlyphOffsets = [];
             let iLine = -1;
 
+            
+            let __cb_start_4 = Date.now();
+            let __cb_iters_4 = 0;
+            
+            let __cb_start_4 = Date.now();
+            let __cb_iters_4 = 0;
             while (stream.pos < stream.size)
             {
+                if (++__cb_iters_4 > 10000 || (Date.now() - __cb_start_4) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_4 > 10000 || (Date.now() - __cb_start_4) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
                 iLine++;
                 if (iLine < startLine)
                 {
@@ -1334,8 +1478,40 @@ void main() {\n\
         let startLine = pageIndex == Page1 ? Line1 : 0;
         let endLine   = pageIndex == Page2 ? Line2 : Infinity;
 
-        while (stream.pos < stream.size)
+        
+            let __cb_start_5 = Date.now();
+            let __cb_iters_5 = 0;
+            
+            let __cb_start_5 = Date.now();
+            let __cb_iters_5 = 0;
+            while (stream.pos < stream.size)
         {
+                if (++__cb_iters_5 > 10000 || (Date.now() - __cb_start_5) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_5 > 10000 || (Date.now() - __cb_start_5) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
             iLine++;
             if (iLine < startLine)
             {
@@ -1479,8 +1655,40 @@ void main() {\n\
         let startLine = pageIndex == Page1 ? Line1 : 0;
         let endLine   = pageIndex == Page2 ? Line2 : Infinity;
 
-        while (stream.pos < stream.size)
+        
+            let __cb_start_6 = Date.now();
+            let __cb_iters_6 = 0;
+            
+            let __cb_start_6 = Date.now();
+            let __cb_iters_6 = 0;
+            while (stream.pos < stream.size)
         {
+                if (++__cb_iters_6 > 10000 || (Date.now() - __cb_start_6) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_6 > 10000 || (Date.now() - __cb_start_6) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
             iLine++;
             if (iLine < startLine)
             {
@@ -1552,8 +1760,40 @@ void main() {\n\
 
         let ret = "";
 
-        while (stream.pos < stream.size)
+        
+            let __cb_start_7 = Date.now();
+            let __cb_iters_7 = 0;
+            
+            let __cb_start_7 = Date.now();
+            let __cb_iters_7 = 0;
+            while (stream.pos < stream.size)
         {
+                if (++__cb_iters_7 > 10000 || (Date.now() - __cb_start_7) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_7 > 10000 || (Date.now() - __cb_start_7) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
             stream.Skip(8);
             if (stream.GetChar())
                 stream.Skip(8);
@@ -1583,8 +1823,40 @@ void main() {\n\
         let dKoefX = this.pages[pageIndex].Dpi / 25.4;
         let dKoefY = this.pages[pageIndex].Dpi / 25.4;
 
-        while (stream.pos < stream.size)
+        
+            let __cb_start_8 = Date.now();
+            let __cb_iters_8 = 0;
+            
+            let __cb_start_8 = Date.now();
+            let __cb_iters_8 = 0;
+            while (stream.pos < stream.size)
         {
+                if (++__cb_iters_8 > 10000 || (Date.now() - __cb_start_8) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_8 > 10000 || (Date.now() - __cb_start_8) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
             let _lineX = stream.GetDouble();
             let _lineY = stream.GetDouble();
             let _lineEx = 1;
@@ -1793,8 +2065,40 @@ void main() {\n\
         
         let curLine = "";
 
-        while (stream.pos < stream.size)
+        
+            let __cb_start_9 = Date.now();
+            let __cb_iters_9 = 0;
+            
+            let __cb_start_9 = Date.now();
+            let __cb_iters_9 = 0;
+            while (stream.pos < stream.size)
         {
+                if (++__cb_iters_9 > 10000 || (Date.now() - __cb_start_9) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_9 > 10000 || (Date.now() - __cb_start_9) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
             _lineEx = 1;
             _lineEy = 0;
             curLine = "";
@@ -1858,8 +2162,40 @@ void main() {\n\
         }
         let PosStartText = posInText;
 
-        while (stream.pos < stream.size)
+        
+            let __cb_start_10 = Date.now();
+            let __cb_iters_10 = 0;
+            
+            let __cb_start_10 = Date.now();
+            let __cb_iters_10 = 0;
+            while (stream.pos < stream.size)
         {
+                if (++__cb_iters_10 > 10000 || (Date.now() - __cb_start_10) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_10 > 10000 || (Date.now() - __cb_start_10) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < stream.size",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
             if (searchText[posInText] == ' ')
             {
                 for (let i = posInText; i < searchText.length; ++i)
@@ -1972,8 +2308,40 @@ void main() {\n\
             _numLine = oMatch.Line;
             stream.pos = oMatch.StreamPos;
             let _text = "";
+            
+            let __cb_start_11 = Date.now();
+            let __cb_iters_11 = 0;
+            
+            let __cb_start_11 = Date.now();
+            let __cb_iters_11 = 0;
             while (stream.pos < curStreamPos)
             {
+                if (++__cb_iters_11 > 10000 || (Date.now() - __cb_start_11) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined'), "curStreamPos": (typeof curStreamPos !== 'undefined' ? (typeof curStreamPos === 'object' && curStreamPos !== null ? (typeof curStreamPos.toString === 'function' && curStreamPos.toString() !== '[object Object]' ? curStreamPos.toString() : JSON.stringify(curStreamPos, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : curStreamPos) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < curStreamPos",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_11 > 10000 || (Date.now() - __cb_start_11) > 5000) {
+                    try {
+                        var state = { "stream": (typeof stream !== 'undefined' ? (typeof stream === 'object' && stream !== null ? (typeof stream.toString === 'function' && stream.toString() !== '[object Object]' ? stream.toString() : JSON.stringify(stream, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : stream) : 'undefined'), "curStreamPos": (typeof curStreamPos !== 'undefined' ? (typeof curStreamPos === 'object' && curStreamPos !== null ? (typeof curStreamPos.toString === 'function' && curStreamPos.toString() !== '[object Object]' ? curStreamPos.toString() : JSON.stringify(curStreamPos, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : curStreamPos) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "file.js",
+                            condition: "stream.pos < curStreamPos",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
                 let startChar = _numLine == oMatch.Line ? oMatch.Char : -2;
                 let endChar   = _numLine == curLine     ? curChar     : -1;
 
@@ -2098,6 +2466,29 @@ void main() {\n\
         }
         else if (4 === error)
         {
+            // Password-protected file - set up callbacks but don't load pages yet
+            file.type = file.nativeFile["getType"]();
+
+            file.nativeFile["onRepaintPages"] = function(pages) {
+                file.onRepaintPages && file.onRepaintPages(pages);
+            };
+            file.nativeFile["onRepaintAnnotations"] = function(pages) {
+                file.onRepaintAnnotations && file.onRepaintAnnotations(pages);
+            };
+            file.nativeFile["onRepaintForms"] = function(pages) {
+                file.onRepaintForms && file.onRepaintForms(pages);
+            };
+
+            file.nativeFile["onUpdateStatistics"] = function(par, word, symbol, space) {
+                file.onUpdateStatistics && file.onUpdateStatistics(par, word, symbol, space);
+            };
+            file.nativeFile["isPunctuation"] = function(unicode) {
+                return AscCommon.g_aPunctuation[unicode];
+            };
+            
+            // For password-protected files, mark as valid even though pages aren't loaded yet
+            // Pages will be loaded after password is provided
+            file._isPasswordProtected = true;
             return file;
         }
         

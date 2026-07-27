@@ -7361,7 +7361,7 @@ background-repeat: no-repeat;\
 		// apply theme
 		var _array = this.WordControl.m_oLogicDocument.GetSelectedSlides();
 		this.WordControl.m_oLogicDocument.changeTheme(theme_load_info, (_array.length <= 1 && !this.bSelectedSlidesTheme) ? null : _array);
-		this.WordControl.ThemeGenerateThumbnails(theme_load_info.Master);
+		this.WordControl.ThemeGenerateThumbnails(theme_load_info ? theme_load_info.Master : null);
 		// change templates in menu
 		this.WordControl.CheckLayouts();
 		this.WordControl.m_oLogicDocument.FinalizeAction(true);

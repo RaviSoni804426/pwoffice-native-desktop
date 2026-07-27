@@ -82,6 +82,14 @@ const error_box = function() {
             _page = args.page || 'def';
             const svg_id = page_config[_page] && page_config[_page][2] ? page_config[_page][2] : "connection_error";
 
+            let crashDumpHtml = "";
+            try {
+                let crashData = window.localStorage.getItem('LAST_CRASH_DEBUG');
+                if (crashData) {
+                    crashDumpHtml = `<div style="margin-top:20px; padding: 10px; background: #222; color: #0f0; font-family: monospace; text-align: left; max-height: 400px; overflow: auto; width: 80%; border-radius: 5px; white-space: pre-wrap; z-index: 9999; user-select: text;">CRASH DEBUG DATA:<br/>${crashData}</div>`;
+                }
+            } catch(e) {}
+
             const html_ = `
                 <section class="box-connection-error center">
                     <svg class="icon">
@@ -89,6 +97,7 @@ const error_box = function() {
                     </svg>
                     <label id="idx-msg-short" class="description description__short"></label>
                     <label id="idx-msg-long" class="description description__long"></label>
+                    ${crashDumpHtml}
                 </section>`;
 
             if ( !args.parent ) args.parent = document.body;

@@ -4429,31 +4429,37 @@
 	};
 	WriterToJSON.prototype.SerTheme = function(oTheme)
 	{
+		if (!oTheme)
+			return null;
+
 		var aExtraClrSchemeLst = [];
-		for (var nElm = 0; nElm < oTheme.extraClrSchemeLst.length; nElm++)
-			aExtraClrSchemeLst.push(this.SerExtraClrScheme(oTheme.extraClrSchemeLst[nElm]));
-
-		var oThemeObj = {
-			"custClrLst": this.SerColorMapOvr(oTheme.clrMap), // ??? maybe not supported
-			"name":       oTheme.name,
-			"objectDefaults": {
-				"lnDef": this.SerDefSpDefinition(oTheme.lnDef), // AscFormat.DefaultShapeDefinition
-				"spDef": this.SerDefSpDefinition(oTheme.spDef),
-				"txDef": this.SerDefSpDefinition(oTheme.txDef)
-			},
-			"themeElements": {
-				"clrScheme":  this.SerClrScheme(oTheme.themeElements.clrScheme),
-				"fmtScheme":  this.SerFmtScheme(oTheme.themeElements.fmtScheme),
-				"fontScheme": this.SerFontScheme(oTheme.themeElements.fontScheme)
-			},
-
-			"extraClrSchemeLst": aExtraClrSchemeLst, // AscFormat.ExtraClrScheme:
-			"isThemeOverride":   oTheme.isThemeOverride,
-			"id":                oTheme.Id
+		if (oTheme.extraClrSchemeLst)
+		{
+			for (var nElm = 0; nElm < oTheme.extraClrSchemeLst.length; nElm++)
+				aExtraClrSchemeLst.push(this.SerExtraClrScheme(oTheme.extraClrSchemeLst[nElm]));
 		}
 
-		// мамим, чтобы не записывать несколько раз
-		this.themesMap[oTheme.Id] = oThemeObj;
+		var oThemeObj = {
+			"custClrLst": oTheme.clrMap ? this.SerColorMapOvr(oTheme.clrMap) : null,
+			"name":       oTheme.name,
+			"objectDefaults": {
+				"lnDef": oTheme.lnDef ? this.SerDefSpDefinition(oTheme.lnDef) : null,
+				"spDef": oTheme.spDef ? this.SerDefSpDefinition(oTheme.spDef) : null,
+				"txDef": oTheme.txDef ? this.SerDefSpDefinition(oTheme.txDef) : null
+			},
+			"themeElements": oTheme.themeElements ? {
+				"clrScheme":  oTheme.themeElements.clrScheme ? this.SerClrScheme(oTheme.themeElements.clrScheme) : null,
+				"fmtScheme":  oTheme.themeElements.fmtScheme ? this.SerFmtScheme(oTheme.themeElements.fmtScheme) : null,
+				"fontScheme": oTheme.themeElements.fontScheme ? this.SerFontScheme(oTheme.themeElements.fontScheme) : null
+			} : null,
+
+			"extraClrSchemeLst": aExtraClrSchemeLst,
+			"isThemeOverride":   oTheme.isThemeOverride,
+			"id":                oTheme.Id
+		};
+
+		if (oTheme.Id)
+			this.themesMap[oTheme.Id] = oThemeObj;
 
 		return oThemeObj;
 	};
@@ -4553,20 +4559,31 @@
 	};
 	ReaderFromJSON.prototype.ThemeFromJSON = function(oParsedTheme)
 	{
+		if (!oParsedTheme) return null;
 		var oTheme = new AscFormat.CTheme();
-		for (var nElm = 0; nElm < oParsedTheme["extraClrSchemeLst"].length; nElm++)
-			oTheme.addExtraClrSceme(this.ExtraClrSchemeFromJSON(oParsedTheme["extraClrSchemeLst"][nElm]));
+		if (oParsedTheme["extraClrSchemeLst"])
+		{
+			for (var nElm = 0; nElm < oParsedTheme["extraClrSchemeLst"].length; nElm++)
+				oTheme.addExtraClrSceme(this.ExtraClrSchemeFromJSON(oParsedTheme["extraClrSchemeLst"][nElm]));
+		}
 
 		oTheme.setName(oParsedTheme["name"]);
-		oParsedTheme["objectDefaults"]["lnDef"] && oTheme.setLnDef(this.DefSpDefinitionFromJSON(oParsedTheme["objectDefaults"]["lnDef"]));
-		oParsedTheme["objectDefaults"]["spDef"] && oTheme.setSpDef(this.DefSpDefinitionFromJSON(oParsedTheme["objectDefaults"]["spDef"]));
-		oParsedTheme["objectDefaults"]["txDef"] && oTheme.setTxDef(this.DefSpDefinitionFromJSON(oParsedTheme["objectDefaults"]["txDef"]));
-		oParsedTheme["themeElements"]["clrScheme"] && oTheme.setColorScheme(this.ClrSchemeFromJSON(oParsedTheme["themeElements"]["clrScheme"]));
-		oParsedTheme["themeElements"]["fmtScheme"] && oTheme.setFormatScheme(this.FmtSchemeFromJSON(oParsedTheme["themeElements"]["fmtScheme"]));
-		oParsedTheme["themeElements"]["fontScheme"] && oTheme.setFontScheme(this.FontSchemeFromJSON(oParsedTheme["themeElements"]["fontScheme"]));
+		if (oParsedTheme["objectDefaults"])
+		{
+			oParsedTheme["objectDefaults"]["lnDef"] && oTheme.setLnDef(this.DefSpDefinitionFromJSON(oParsedTheme["objectDefaults"]["lnDef"]));
+			oParsedTheme["objectDefaults"]["spDef"] && oTheme.setSpDef(this.DefSpDefinitionFromJSON(oParsedTheme["objectDefaults"]["spDef"]));
+			oParsedTheme["objectDefaults"]["txDef"] && oTheme.setTxDef(this.DefSpDefinitionFromJSON(oParsedTheme["objectDefaults"]["txDef"]));
+		}
+		if (oParsedTheme["themeElements"])
+		{
+			oParsedTheme["themeElements"]["clrScheme"] && oTheme.setColorScheme(this.ClrSchemeFromJSON(oParsedTheme["themeElements"]["clrScheme"]));
+			oParsedTheme["themeElements"]["fmtScheme"] && oTheme.setFormatScheme(this.FmtSchemeFromJSON(oParsedTheme["themeElements"]["fmtScheme"]));
+			oParsedTheme["themeElements"]["fontScheme"] && oTheme.setFontScheme(this.FontSchemeFromJSON(oParsedTheme["themeElements"]["fontScheme"]));
+		}
 		oTheme.setIsThemeOverride(oParsedTheme["isThemeOverride"]);
 
-		this.themesMap[oParsedTheme["id"]] = oTheme;
+		if (oParsedTheme["id"])
+			this.themesMap[oParsedTheme["id"]] = oTheme;
 
 		return oTheme;
 	};

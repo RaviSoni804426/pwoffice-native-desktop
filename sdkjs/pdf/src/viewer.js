@@ -1202,6 +1202,26 @@
 
 			if (!this.file)
 			{
+				// Retry file creation multiple times before declaring critical error
+				// This handles transient loading issues and slow file processing
+				if (!this._fileLoadRetryCount)
+					this._fileLoadRetryCount = 0;
+				
+				console.error("[PDF DEBUG] File creation failed. Retry count: " + this._fileLoadRetryCount + "/10. Data length: " + (data ? data.length : "null"));
+				
+				if (this._fileLoadRetryCount < 10)
+				{
+					this._fileLoadRetryCount++;
+					var _t = this;
+					var delay = this._fileLoadRetryCount * 1000; // Exponential backoff: 1s, 2s, 3s...
+					console.log("[PDF DEBUG] Retrying file creation in " + delay + "ms...");
+					setTimeout(function(){
+						_t.open(data, password);
+					}, delay);
+					return;
+				}
+				
+				console.error("[PDF DEBUG] File creation failed after 10 retries. Sending ConvertationOpenError.");
 				this.Api.sendEvent("asc_onError", Asc.c_oAscError.ID.ConvertationOpenError, Asc.c_oAscError.Level.Critical);
 				return;
 			}
@@ -1258,7 +1278,54 @@
 			this.checkLoadCMap();
 
 			if (this.file && !this.file.isNeedPassword() && !this.file.isValid())
+			{
+				// Retry multiple times if file is invalid (no pages loaded)
+				// This handles cases where native file loading might be delayed
+				if (!this._fileValidRetryCount)
+					this._fileValidRetryCount = 0;
+				
+				console.error("[PDF DEBUG] File validation failed (no pages). Retry count: " + this._fileValidRetryCount + "/10. Pages loaded: " + this.file.pages.length);
+				
+				if (this._fileValidRetryCount < 10)
+				{
+					this._fileValidRetryCount++;
+					var _t = this;
+					var delay = this._fileValidRetryCount * 1000; // Exponential backoff: 1s, 2s, 3s...
+					console.log("[PDF DEBUG] Retrying file validation in " + delay + "ms...");
+					setTimeout(function(){
+						// Try to reload pages from native file
+						if (_t.file && _t.file.nativeFile)
+						{
+							console.log("[PDF DEBUG] Attempting to reload pages from native file...");
+							_t.file.pages = _t.file.nativeFile["getPages"]();
+							console.log("[PDF DEBUG] Pages loaded after retry: " + _t.file.pages.length);
+							for (var i = 0, len = _t.file.pages.length; i < len; i++)
+							{
+								var page = _t.file.pages[i];
+								page.W = page["W"];
+								page.H = page["H"];
+								page.Dpi = page["Dpi"];
+								page.originIndex = page["originIndex"];
+								page.originRotate = page["Rotate"];
+								page.Rotate = page["Rotate"];
+							}
+							_t.file.originalPagesCount = _t.file.pages.length;
+							_t.afterOpen();
+						} else {
+							console.error("[PDF DEBUG] Cannot reload pages - file or nativeFile is null");
+						}
+					}, delay);
+					return;
+				}
+				
+				console.error("[PDF DEBUG] File validation failed after 10 retries. Sending ConvertationOpenError.");
 				this.Api.sendEvent("asc_onError", Asc.c_oAscError.ID.ConvertationOpenError, Asc.c_oAscError.Level.Critical);
+				return;
+			}
+
+			// Reset retry counters on successful file load
+			this._fileLoadRetryCount = 0;
+			this._fileValidRetryCount = 0;
 
 			this.Api.WordControl.m_oOverlayApi = this.overlay;
 
@@ -3115,18 +3182,39 @@
 
 			if (!isCommands)
 			{
+				
+				let __cb_start_1 = Date.now();
+				let __cb_iters_1 = 0;
 				while (this.pagesInfo.countTextPages < pagesCount)
 				{
+					if (++__cb_iters_1 > 10000 || (Date.now() - __cb_start_1) > 5000) {
+						try {
+							var state = { "pagesCount": pagesCount, "countTextPages": this.pagesInfo.countTextPages, "pagesLen": this.file && this.file.pages ? this.file.pages.length : null };
+							window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+								location: "viewer.js",
+								condition: "this.pagesInfo.countTextPages < pagesCount",
+								variables: state,
+								timestamp: Date.now()
+							}, null, 2));
+						} catch(e) {}
+						break;
+					}
+
+					let currentPageObj = this.file && this.file.pages ? this.file.pages[this.pagesInfo.countTextPages] : null;
+					if (!currentPageObj) {
+						this.pagesInfo.countTextPages++;
+						continue;
+					}
+
 					// we might have already received commands, since visible pages have priority
-					if (null != this.file.pages[this.pagesInfo.countTextPages].text)
+					if (null != currentPageObj.text)
 					{
 						this.pagesInfo.countTextPages++;
 						continue;
 					}
 
-					let page = this.file.pages[this.pagesInfo.countTextPages];
-					if (undefined !== page.originIndex) {
-						page.text = this.file.getText(page.originIndex);
+					if (undefined !== currentPageObj.originIndex) {
+						currentPageObj.text = this.file.getText(currentPageObj.originIndex);
 						isCommands = true;
 					} 
 					
@@ -4947,7 +5035,39 @@
 			let isParentsChanged = false;
 			oDoc.widgets.forEach(function(widget) {
 				let oParent = widget.GetParent();
-				while (oParent) {
+				
+            let __cb_start_2 = Date.now();
+            let __cb_iters_2 = 0;
+            
+            let __cb_start_2 = Date.now();
+            let __cb_iters_2 = 0;
+            while (oParent) {
+                if (++__cb_iters_2 > 10000 || (Date.now() - __cb_start_2) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "viewer.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_2 > 10000 || (Date.now() - __cb_start_2) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "viewer.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
 					if (oParent.IsChanged()) {
 						isParentsChanged = true;
 						break;
@@ -4989,7 +5109,39 @@
 			let aWritedParents = [];
 			oDoc.widgets.forEach(function(widget) {
 				let oParent = widget.GetParent();
-				while (oParent) {
+				
+            let __cb_start_3 = Date.now();
+            let __cb_iters_3 = 0;
+            
+            let __cb_start_3 = Date.now();
+            let __cb_iters_3 = 0;
+            while (oParent) {
+                if (++__cb_iters_3 > 10000 || (Date.now() - __cb_start_3) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "viewer.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_3 > 10000 || (Date.now() - __cb_start_3) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "viewer.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
 					if (oParent.IsChanged() && !aWritedParents.includes(oParent)) {
 						nParents++;
 						oParent.WriteToBinaryAsParent(oMemory);
@@ -5371,7 +5523,39 @@
 			let isParentsChanged = false;
 			oDoc.widgets.forEach(function(widget) {
 				let oParent = widget.GetParent();
-				while (oParent) {
+				
+            let __cb_start_4 = Date.now();
+            let __cb_iters_4 = 0;
+            
+            let __cb_start_4 = Date.now();
+            let __cb_iters_4 = 0;
+            while (oParent) {
+                if (++__cb_iters_4 > 10000 || (Date.now() - __cb_start_4) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "viewer.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_4 > 10000 || (Date.now() - __cb_start_4) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "viewer.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
 					if (oParent.IsChanged()) {
 						isParentsChanged = true;
 						break;
@@ -5413,7 +5597,39 @@
 			let aWritedParents = [];
 			oDoc.widgets.forEach(function(widget) {
 				let oParent = widget.GetParent();
-				while (oParent) {
+				
+            let __cb_start_5 = Date.now();
+            let __cb_iters_5 = 0;
+            
+            let __cb_start_5 = Date.now();
+            let __cb_iters_5 = 0;
+            while (oParent) {
+                if (++__cb_iters_5 > 10000 || (Date.now() - __cb_start_5) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "viewer.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
+                if (++__cb_iters_5 > 10000 || (Date.now() - __cb_start_5) > 5000) {
+                    try {
+                        var state = { "oParent": (typeof oParent !== 'undefined' ? (typeof oParent === 'object' && oParent !== null ? (typeof oParent.toString === 'function' && oParent.toString() !== '[object Object]' ? oParent.toString() : JSON.stringify(oParent, function(key, val) { if (key === 'parent' || key === 'Document' || key === 'stream') return undefined; return val; })) : oParent) : 'undefined') };
+                        window.localStorage.setItem('LAST_CRASH_DEBUG', JSON.stringify({
+                            location: "viewer.js",
+                            condition: "oParent",
+                            variables: state,
+                            timestamp: Date.now()
+                        }, null, 2));
+                    } catch(e) {}
+                    break;
+                }
+        
 					if (oParent.IsChanged() && !aWritedParents.includes(oParent)) {
 						nParents++;
 						oParent.WriteToBinaryAsParent(oMemory);

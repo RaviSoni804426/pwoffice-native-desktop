@@ -376,7 +376,7 @@ CShape.prototype.getParentObjects = function ()
                     slide: oParent,
                     layout: oParent.Layout,
                     master: oParent.Layout ? oParent.Layout.Master : null,
-                    theme: this.themeOverride ? this.themeOverride : (oParent.Layout && oParent.Layout.Master ? oParent.Layout.Master.Theme : null)
+                    theme: this.themeOverride ? this.themeOverride : (oParent.Layout && oParent.Layout.Master && oParent.Layout.Master.Theme ? oParent.Layout.Master.Theme : AscFormat.GetDefaultTheme())
                 };
             }
             case AscDFH.historyitem_type_SlideLayout:
@@ -386,7 +386,7 @@ CShape.prototype.getParentObjects = function ()
                     slide: null,
                     layout: oParent,
                     master: oParent.Master,
-                    theme: this.themeOverride ? this.themeOverride : (oParent.Master ? oParent.Master.Theme : null)
+                    theme: this.themeOverride ? this.themeOverride : (oParent.Master && oParent.Master.Theme ? oParent.Master.Theme : AscFormat.GetDefaultTheme())
                 };
             }
             case AscDFH.historyitem_type_SlideMaster:
@@ -396,7 +396,7 @@ CShape.prototype.getParentObjects = function ()
                     slide: null,
                     layout: null,
                     master: oParent,
-                    theme: this.themeOverride ? this.themeOverride : oParent.Theme
+                    theme: this.themeOverride ? this.themeOverride : (oParent.Theme || AscFormat.GetDefaultTheme())
                 };
             }
             case AscDFH.historyitem_type_Notes:
@@ -407,7 +407,7 @@ CShape.prototype.getParentObjects = function ()
                     slide: null,
                     layout: null,
                     master: oParent.Master,
-                    theme: this.themeOverride ? this.themeOverride : (oParent.Master ? oParent.Master.Theme : null),
+                    theme: this.themeOverride ? this.themeOverride : (oParent.Master && oParent.Master.Theme ? oParent.Master.Theme : AscFormat.GetDefaultTheme()),
                     notes: oParent
                 }
             }
@@ -418,7 +418,7 @@ CShape.prototype.getParentObjects = function ()
                     slide: null,
                     layout: null,
                     master: oParent,
-                    theme: this.themeOverride ? this.themeOverride : oParent.Theme,
+                    theme: this.themeOverride ? this.themeOverride : (oParent.Theme || AscFormat.GetDefaultTheme()),
                     notes: null
                 }
             }

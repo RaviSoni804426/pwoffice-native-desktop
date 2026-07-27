@@ -196,8 +196,13 @@ window["DesktopOfflineAppDocumentEndLoad"] = function(_url, _data, _len)
 	AscCommon.g_oIdCounter.m_sUserId = window["AscDesktopEditor"]["CheckUserId"]();
 	if (_data === "")
 	{
-		try { alert("CANARY_DEBUG_TRACE: _data is empty in DesktopOfflineAppDocumentEndLoad"); } catch(e){}
-        editor.sendEvent("asc_onError", c_oAscError.ID.ConvertationOpenError, c_oAscError.Level.Critical);
+		var errMsg1 = "REAL_ERROR_DEBUG: DesktopOfflineAppDocumentEndLoad empty _data for recovery url: " + _url;
+		AscCommon.sendClientLog("error", errMsg1, editor);
+		if (window["AscDesktopEditor"] && window["AscDesktopEditor"]["Log"]) {
+			try { window["AscDesktopEditor"]["Log"](errMsg1); } catch(e){}
+		}
+		try { alert(errMsg1); } catch(e){}
+        editor.sendEvent("asc_onError", c_oAscError.ID.ConvertationOpenError, c_oAscError.Level.Critical, errMsg1);
 		return;
 	}
 
@@ -209,8 +214,13 @@ window["DesktopOfflineAppDocumentEndLoad"] = function(_url, _data, _len)
 			binaryArray = new Uint8Array(bufferArray);
 		else
 		{
-			try { alert("CANARY_DEBUG_TRACE: bufferArray is null in GetOpenedFile"); } catch(e){}
-			editor.sendEvent("asc_onError", c_oAscError.ID.ConvertationOpenError, c_oAscError.Level.Critical);
+			var errMsg2 = "REAL_ERROR_DEBUG: GetOpenedFile returned null bufferArray for _data: " + _data;
+			AscCommon.sendClientLog("error", errMsg2, editor);
+			if (window["AscDesktopEditor"] && window["AscDesktopEditor"]["Log"]) {
+				try { window["AscDesktopEditor"]["Log"](errMsg2); } catch(e){}
+			}
+			try { alert(errMsg2); } catch(e){}
+			editor.sendEvent("asc_onError", c_oAscError.ID.ConvertationOpenError, c_oAscError.Level.Critical, errMsg2);
 			return;
 		}
 	}
@@ -789,4 +799,10 @@ _proto.prototype["pluginMethod_OnEncryption"] = function(obj)
 	}
 };
 
-AscCommon.getBinaryArray = getB
+AscCommon.getBinaryArray = getBinaryArray;
+// -------------------------------------------
+
+// change environment
+//AscBrowser.isSafari = false;
+//AscBrowser.isSafariMacOs = false;
+//window.USER_AGENT_SAFARI_MACOS = false;
