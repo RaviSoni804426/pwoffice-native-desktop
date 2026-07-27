@@ -96,7 +96,7 @@ if config.check_option("module", "desktop"):
 build_sln.make()
 
 # js
-build_js.make()
+# build_js.make()
 
 #server
 build_server.make()
