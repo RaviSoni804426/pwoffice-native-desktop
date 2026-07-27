@@ -4,7 +4,7 @@
 #define sIntCompanyName                 sCompanyName
 #define sProductName                    "Desktop Editors"
 #define sIntProductName                 "DesktopEditors"
-#define sAppName                        str(sCompanyName)
+#define sAppName                        "PW Office"
 #define sPackageName                    str(sIntCompanyName + "-" + sIntProductName)
 #define sAppPublisher                   "Ascensio System SIA"
 #define sAppPublisherURL                "https://www.onlyoffice.com/"

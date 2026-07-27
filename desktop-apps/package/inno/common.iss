@@ -1,4 +1,4 @@
-﻿; -- Installer Common --
+; -- Installer Common --
 
 #ifndef BRANDING_DIR
 #define BRANDING_DIR '.'
@@ -97,7 +97,7 @@ OutputBaseFileName                ={#OUTPUT_FILE}
 SignTool                  =byparam $p
 #endif
 
-SetupIconFile={#BRANDING_DIR}\..\..\win-linux\extras\projicons\res\icons\desktopeditors.ico
+SetupIconFile=D:\pwoffice-native\branding\pwoffice.ico
 WizardStyle=classic dynamic
 WizardSizePercent=100
 WizardImageFile={#BRANDING_DIR}\res\WizImage-Light-*.png
@@ -110,8 +110,8 @@ LicenseFile={#BRANDING_DIR}\..\common\license\commercial\LICENSE.rtf
 LicenseFile={#BRANDING_DIR}\..\common\license\opensource\LICENSE.rtf
 #endif
 
-SolidCompression=yes
-Compression=lzma2/ultra64
+SolidCompression=no
+Compression=lzma2/fast
 LZMAUseSeparateProcess=yes
 
 [Languages]

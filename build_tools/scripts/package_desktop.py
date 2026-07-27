@@ -58,18 +58,18 @@ def make_windows():
     utils.delete_dir("zip")
 
   if make_prepare():
-    make_zip()
+    # make_zip()
     if branding.onlyoffice:
-      make_inno()
+      # make_inno()
       make_inno("standalone")
-      make_advinst()
+      # make_advinst()
   else:
     utils.set_summary("desktop zip opensource build", False)
     utils.set_summary("desktop inno opensource build", False)
     utils.set_summary("desktop inno standalone build", False)
     utils.set_summary("desktop advinst opensource build", False)
 
-  if branding.onlyoffice and make_prepare("commercial"):
+  if False and branding.onlyoffice and make_prepare("commercial"):
     make_zip("commercial")
     make_inno("commercial")
     make_advinst("commercial")
