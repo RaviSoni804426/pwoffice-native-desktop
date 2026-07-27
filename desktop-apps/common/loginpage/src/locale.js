@@ -10,7 +10,7 @@
  * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. For
  * details, see the GNU AGPL at: https://www.gnu.org/licenses/agpl-3.0.html
  *
- * You can contact Ascensio System SIA by email at info@onlyoffice.com
+ * You can contact Ascensio System SIA by email at info@PWOFFICE.com
  * or by postal mail at 20A-6 Ernesta Birznieka-Upisha Street, Riga,
  * LV-1050, Latvia, European Union.
  *
@@ -35,20 +35,20 @@
 
 var l10n = l10n || {};
 l10n.en = {
-    welWelcome: 'Welcome to ONLYOFFICE Desktop Editors!',
-    welDescr: 'Work on documents offline or connect the suite to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PWOFFICE Desktop Editors!',
+    welDescr: 'Work on documents offline or connect the suite to your cloud: PWOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Need help? Visit our $1.',
     textHelpCenter: 'Help Center',
     btnConnect: 'Connect now',
     textHavePortal: 'Already use a cloud?',
-    btnCreatePortal: 'Create an ONLYOFFICE cloud',
+    btnCreatePortal: 'Create an PWOFFICE cloud',
     btnAddPortal: 'Add сloud',
     btnLogin: 'Login',
     btnBrowse: 'Browse',
     btnNext: 'Next',
     portalEmptyTitle: 'Connect to your cloud',
     portalEmptyDescr: 'Store your documents in the cloud and access them any time, from anywhere. Share and collaborate on them. Chat in your doc, add comments or share it for review.',
-    portalEmptyAdv1: 'Don\'t have a cloud account yet? Go online with ONLYOFFICE Cloud Service and <br />try collaborative capabilities for free.',
+    portalEmptyAdv1: 'Don\'t have a cloud account yet? Go online with PWOFFICE Cloud Service and <br />try collaborative capabilities for free.',
     portalListTitle: 'Connected clouds',
     textNoFiles: 'There are no files',
     listRecoveryTitle:'Recover files',
@@ -64,7 +64,7 @@ l10n.en = {
     textMyComputer: 'My Computer',
     textThrough: 'through',
     linkForgotPass: 'Forgot password?',
-    linkCreatePortal: 'Create an ONLYOFFICE cloud',
+    linkCreatePortal: 'Create an PWOFFICE cloud',
     linkResend: 'Send the code again',
     linkChangePhone: 'Change phone number',
     loginTitleStart: 'Connect to cloud office',
@@ -83,7 +83,7 @@ l10n.en = {
     pshPass: 'password',
     pshPhone: 'phone number',
     pshCode: 'code from text message',
-    loginNoteAssignPhone: 'The two-factor authentication is enabled to provide additional ONLYOFFICE cloud security. Enter your mobile phone number to continue work on the cloud office. Mobile phone number must be entered using an international format with country code.',
+    loginNoteAssignPhone: 'The two-factor authentication is enabled to provide additional PWOFFICE cloud security. Enter your mobile phone number to continue work on the cloud office. Mobile phone number must be entered using an international format with country code.',
     loginNoteApplyCode: 'The two-factor authentication is enabled. The code has been texted to $1 number.',    
     newDoc: 'Document',
     newXlsx: 'Spreadsheet',
@@ -114,7 +114,7 @@ l10n.en = {
     emptySlide2Title: 'View or restore previous versions',
     emptySlide2Text: 'Restore or just view previous versions of your document, track changes and their authors.',
     emptySlide3Title: 'Store in the cloud',
-    emptySlide3Text: 'Store your documents in the ONLYOFFICE cloud and access them any time, from anywhere.',
+    emptySlide3Text: 'Store your documents in the PWOFFICE cloud and access them any time, from anywhere.',
     settUserName: 'User Name',
     settResetUserName: 'Reset to default',
     settOpenMode: 'Open document in preview mode',

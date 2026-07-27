@@ -56,7 +56,7 @@
 # define APP_MUTEX_NAME "TEAMLAB"
 #endif
 
-#define WINDOW_NAME "ONLYOFFICE"
+#define WINDOW_NAME "PWOFFICE"
 #define WINDOW_TITLE WINDOW_NAME
 #define WINDOW_CLASS_NAME L"DocEditorsWindowClass"
 #define WINDOW_EDITOR_CLASS_NAME L"SingleWindowClass"
