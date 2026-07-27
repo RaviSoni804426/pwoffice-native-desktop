@@ -81,7 +81,7 @@ $(document).ready(function() {
                     <span class="text" l10n>${utils.Lang.actSettings}</span>
                   </a>
               </li>
-              <li class="menu-item hidden">
+              <!-- <li class="menu-item hidden">
                   <a action="about">
                     <div class="icon-box">
                       <svg class="icon" data-iconname="about" data-precls="tool-icon">
@@ -90,7 +90,7 @@ $(document).ready(function() {
                     </div>
                     <span class="text" l10n>${utils.Lang.actAbout}</span>
                   </a>
-              </li>
+              </li> -->
             </div>
             <div class="main-column col-center after-left">
             </div>`;

@@ -42,7 +42,7 @@
 #define reCmdLang           "--(keep)?lang[:|=](\\w{2,5})"
 
 #define APP_NAME "DesktopEditors"
-#define APP_TITLE "ONLYOFFICE"
+#define APP_TITLE "PW Office"
 #ifdef __linux
 # define APP_DATA_PATH "/onlyoffice/desktopeditors"
 # define REG_GROUP_KEY "onlyoffice"
@@ -56,7 +56,7 @@
 # define APP_MUTEX_NAME "TEAMLAB"
 #endif
 
-#define WINDOW_NAME "ONLYOFFICE"
+#define WINDOW_NAME "PW Office"
 #define WINDOW_TITLE WINDOW_NAME
 #define WINDOW_CLASS_NAME L"DocEditorsWindowClass"
 #define WINDOW_EDITOR_CLASS_NAME L"SingleWindowClass"
@@ -64,7 +64,7 @@
 #define APP_DEFAULT_LOCALE "en-US"
 #define APP_DEFAULT_SYSTEM_LOCALE 1
 #define APP_USER_MODEL_ID "ASC.Documents.5"
-#define APP_SIMPLE_WINDOW_TITLE "ONLYOFFICE Editor"
+#define APP_SIMPLE_WINDOW_TITLE "PW Office Editor"
 #define APP_PROTOCOL "oo-office"
 #define FILE_PREFIX "onlyoffice_"
 
