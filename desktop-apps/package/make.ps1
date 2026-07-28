@@ -1,8 +1,8 @@
-﻿param (
+param (
     [System.Version]$Version = "0.0.0.0",
     [string]$Arch = "x64",
     [string]$Target,
-    [string]$CompanyName = "ONLYOFFICE",
+    [string]$CompanyName = "PW Office",
     [string]$ProductName = "DesktopEditors",
     [string]$SourceDir,
     [string]$BuildDir,
@@ -19,8 +19,7 @@ if (-not $SourceDir) {
         "x86" { "win_32" + $(if ($Target -eq "xp") { "_xp" }) }
         "arm64" { "win_arm64" }
     }
-    $SourceDir = "$PSScriptRoot\..\..\build_tools\out\" `
-        + "$BuildPrefix\$CompanyName\$ProductName" | Resolve-Path
+    $SourceDir = "$PSScriptRoot\..\win-linux\build\$BuildPrefix" | Resolve-Path
 }
 if (-not (Test-Path "$SourceDir")) {
     Write-Error "Path `"$SourceDir`" does not exist"

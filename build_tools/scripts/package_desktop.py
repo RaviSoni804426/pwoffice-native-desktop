@@ -59,10 +59,9 @@ def make_windows():
 
   if make_prepare():
     # make_zip()
-    if branding.onlyoffice:
-      # make_inno()
-      make_inno("standalone")
-      # make_advinst()
+    # make_inno()
+    make_inno("standalone")
+    # make_advinst()
   else:
     utils.set_summary("desktop zip opensource build", False)
     utils.set_summary("desktop inno opensource build", False)

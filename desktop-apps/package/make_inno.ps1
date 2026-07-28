@@ -1,8 +1,8 @@
-﻿param (
+param (
     [System.Version]$Version = "0.0.0.0",
     [string]$Arch = "x64",
     [string]$Target,
-    [string]$CompanyName = "ONLYOFFICE",
+    [string]$CompanyName = "PW Office",
     [string]$ProductName = "DesktopEditors",
     [string]$BuildDir,
     [string]$BrandingDir,
@@ -49,11 +49,14 @@ if ($env:INNOPATH) {
 }
 elseif ($Target -notlike "xp*") {
     $RegPath = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup 6_is1"
-    $InnoPath = (Get-ItemProperty $RegPath)."Inno Setup: App Path"
+    $InnoPath = (Get-ItemProperty $RegPath -ErrorAction SilentlyContinue)."Inno Setup: App Path"
 }
 elseif ($Target -like "xp*") {
     $RegPath = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup 5_is1"
-    $InnoPath = (Get-ItemProperty $RegPath)."Inno Setup: App Path"
+    $InnoPath = (Get-ItemProperty $RegPath -ErrorAction SilentlyContinue)."Inno Setup: App Path"
+}
+if (-not $InnoPath) {
+    $InnoPath = "C:\Users\rk871\AppData\Local\Programs\InnoSetup"
 }
 $InnoPath
 $env:Path = "$InnoPath;$env:Path"

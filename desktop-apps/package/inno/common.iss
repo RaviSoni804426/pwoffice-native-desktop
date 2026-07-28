@@ -111,7 +111,7 @@ LicenseFile={#BRANDING_DIR}\..\common\license\opensource\LICENSE.rtf
 #endif
 
 SolidCompression=no
-Compression=lzma2/fast
+Compression=none
 LZMAUseSeparateProcess=yes
 
 [Languages]
@@ -194,7 +194,10 @@ Source: "vc_redist.{#ARCH}.exe"; DestDir: {app}; Flags: deleteafterinstall; \
   AfterInstall: installVCRedist(ExpandConstant('{app}\vc_redist.{#ARCH}.exe'), ExpandConstant('{cm:InstallAdditionalComponents}')); \
   Check: not CheckVCRedist;
 
-Source: "{#BUILD_DIR}\desktop\*"; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: "{#BUILD_DIR}\desktop\*"; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs;
+Source: "{#BUILD_DIR}\..\..\..\dictionaries\*"; DestDir: {app}\dictionaries; Flags: ignoreversion recursesubdirs createallsubdirs skipifsourcedoesntexist;
+Source: "{#BUILD_DIR}\..\..\..\core-fonts\*"; DestDir: {app}\fonts; Flags: ignoreversion recursesubdirs createallsubdirs skipifsourcedoesntexist;
+Source: "{#BUILD_DIR}\..\..\..\document-templates\*"; DestDir: {app}\document-templates; Flags: ignoreversion recursesubdirs createallsubdirs skipifsourcedoesntexist;
 #if defined(_WIN_XP) | defined(EMBED_HELP)
 Source: "{#BUILD_DIR}\help\*"; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 #endif
