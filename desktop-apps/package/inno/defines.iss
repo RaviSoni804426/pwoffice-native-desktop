@@ -14,7 +14,7 @@
 #define sOldAppIconName                 "PW Office"
 #define sAppProtocol                    'pw-office'
 
-#define APP_PATH                        str(sIntCompanyName + "\" + sIntProductName)
+#define APP_PATH                        str(sIntProductName)
 #define UPD_PATH                        str(sIntProductName + "Updates")
 #define APP_REG_PATH                    str("Software\" + APP_PATH)
 #define APP_REG_UNINST_KEY              str(sCompanyName + " " + sProductName)
