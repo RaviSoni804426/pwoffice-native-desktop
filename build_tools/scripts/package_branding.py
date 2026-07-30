@@ -3,10 +3,10 @@
 
 import package_utils as utils
 
-onlyoffice = True
-company_name = "ONLYOFFICE"
-company_name_l = company_name.lower()
-publisher_name = "Ascensio System SIA"
+onlyoffice = False
+company_name = "PW Office"
+company_name_l = "pwoffice"
+publisher_name = "PW Office"
 cert_name = "Ascensio System SIA"
 
 s3_bucket = "repo-doc-onlyoffice-com"
@@ -20,7 +20,7 @@ if utils.is_windows():
   desktop_changes_dir = "desktop-apps/win-linux/package/windows/update/changes"
 
 if utils.is_macos():
-  desktop_package_name = "ONLYOFFICE"
+  desktop_package_name = "PWOffice"
   desktop_build_dir = "desktop-apps/macos"
   desktop_branding_dir = "desktop-apps/macos"
   desktop_updates_dir = "build/update"

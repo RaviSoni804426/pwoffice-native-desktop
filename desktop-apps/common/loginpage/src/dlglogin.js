@@ -74,7 +74,6 @@ window.LoginDlg = function(opts) {
                           </div>
                           <input id="auth-pass" type="password" name="" spellcheck="false" class="tbox dlg--option last" placeholder="${utils.Lang.pshPass}" maxlenght="64" value="">
                           <div id="box-btn-login" class="lr-flex">
-                            <a id="link-restore" class="text-sub link" target="popup" href="javascript:void(0)">${utils.Lang.linkForgotPass}</a>
                             <span />
                             <div>
                               <img class="img-loader">

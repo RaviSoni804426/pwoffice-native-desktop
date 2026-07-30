@@ -59,13 +59,10 @@
         // localStorage.removeItem('welcome');
 
 
-		//language=HTML
-        const helpLink = `<a l10n class="link" href="https://helpcenter.onlyoffice.com/" target="popup">${_lang.textHelpCenter}</a>`;
 		const welcomeBannerTemplate = !localStorage.getItem('welcome') ? `
             <div id="area-welcome">
                 <h2 l10n>${_lang.welWelcome}</h2>
                 <p l10n class="text-normal">${_lang.welDescr}</p>
-                <p l10n class="text-normal">${_lang.welNeedHelp.replace('$1', helpLink)}</p>
             </div>` : '';
 
         //language=HTML
@@ -557,6 +554,28 @@
             ppmenu.events.itemclick.attach(_on_context_menu.bind(this));
         };
 
+        function _show_clear_confirm(message, onYes) {
+            const dlg = new Dialog({
+                dialogClass: 'dlg-clear-confirm',
+                titleText: utils.Lang.menuClear,
+                defaultWidth: 400,
+                bodyTemplate: `
+                    <p>${message}</p>
+                    <div class="dlg-buttons" style="text-align:right;margin-top:20px;">
+                        <button id="btn-clear-confirm-cancel" class="btn">${utils.Lang.btnClearConfirmCancel}</button>
+                        <button id="btn-clear-confirm-yes" class="btn primary">${utils.Lang.btnClearConfirmYes}</button>
+                    </div>
+                `,
+            });
+
+            dlg.show();
+            dlg.$body.find('#btn-clear-confirm-cancel').on('click', () => dlg.close());
+            dlg.$body.find('#btn-clear-confirm-yes').on('click', () => {
+                dlg.close();
+                onYes();
+            });
+        }
+
         function _on_context_menu(menu, action, data) {
             if (/\:open/.test(action)) {
                 menu.actionlist == 'recent' ?
@@ -573,17 +592,22 @@
                     targetModel.setMany({ pinned: false, pinid: targetModel.fileid });
                 }
             } else if (/\:clear/.test(action)) {
-                if (menu.actionlist === 'recent') {
-                    window.sdk.LocalFileRemoveAllRecents();
-                    if (collectionRecovers.size() === 0) {
-                        this.dndZone.show();
+                const isRecent = menu.actionlist === 'recent';
+                const message = isRecent ? utils.Lang.textClearRecentConfirm : utils.Lang.textClearRecoveryConfirm;
+
+                _show_clear_confirm(message, () => {
+                    if (isRecent) {
+                        window.sdk.LocalFileRemoveAllRecents();
+                        if (collectionRecovers.size() === 0) {
+                            this.dndZone.show();
+                        }
+                    } else {
+                        window.sdk.LocalFileRemoveAllRecovers();
+                        if (collectionRecents.size() === 0) {
+                            this.dndZone.show();
+                        }
                     }
-                } else {
-                    window.sdk.LocalFileRemoveAllRecovers();
-                    if (collectionRecents.size() === 0) {
-                        this.dndZone.show();
-                    }
-                }
+                });
             } else if (/\:forget/.test(action)) {
                 $('#' + data.uid, this.view.$panel).addClass('lost');
 
@@ -736,7 +760,11 @@
                         }
                     ],
                     onDocumentSelect: (docType) => {
-                        window.sdk.command("create:new", docType);
+                        if (docType === 'form') {
+                            openFile(OPEN_FILE_FOLDER, '');
+                        } else {
+                            window.sdk.command("create:new", docType);
+                        }
                     }
                 });
 
