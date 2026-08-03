@@ -41,32 +41,32 @@
 #define reUserName          "([^\\.]+)\\.?([^\\.]+)?"
 #define reCmdLang           "--(keep)?lang[:|=](\\w{2,5})"
 
-#define APP_NAME "DesktopEditors"
+#define APP_NAME "PWOffice"
 #define APP_TITLE "PW Office"
 #ifdef __linux
-# define APP_DATA_PATH "/onlyoffice/desktopeditors"
-# define REG_GROUP_KEY "onlyoffice"
-# define APP_MUTEX_NAME "asc:editors"
-# define DESKTOP_FILE_NAME "onlyoffice-desktopeditors"
+# define APP_DATA_PATH "/pwoffice"
+# define REG_GROUP_KEY "pwoffice"
+# define APP_MUTEX_NAME "pw:office"
+# define DESKTOP_FILE_NAME "pwoffice"
 #else
-# define APP_DATA_PATH "/ONLYOFFICE/DesktopEditors"
-# define APP_REG_NAME  "ONLYOFFICE"
-# define REG_GROUP_KEY "ONLYOFFICE"
-# define REG_UNINST_KEY "ONLYOFFICE Desktop Editors"
-# define APP_MUTEX_NAME "TEAMLAB"
+# define APP_DATA_PATH "/PWOffice"
+# define APP_REG_NAME  "PWOffice"
+# define REG_GROUP_KEY "PWOffice"
+# define REG_UNINST_KEY "PW Office Desktop Editors"
+# define APP_MUTEX_NAME "PWOFFICE"
 #endif
 
 #define WINDOW_NAME "PW Office"
 #define WINDOW_TITLE WINDOW_NAME
-#define WINDOW_CLASS_NAME L"DocEditorsWindowClass"
-#define WINDOW_EDITOR_CLASS_NAME L"SingleWindowClass"
-#define REG_APP_NAME "DesktopEditors"
+#define WINDOW_CLASS_NAME L"PWOfficeWindowClass"
+#define WINDOW_EDITOR_CLASS_NAME L"PWOfficeSingleWindowClass"
+#define REG_APP_NAME "PWOffice"
 #define APP_DEFAULT_LOCALE "en-US"
 #define APP_DEFAULT_SYSTEM_LOCALE 1
-#define APP_USER_MODEL_ID "ASC.Documents.5"
+#define APP_USER_MODEL_ID "PW.Office.1"
 #define APP_SIMPLE_WINDOW_TITLE "PW Office Editor"
-#define APP_PROTOCOL "oo-office"
-#define FILE_PREFIX "onlyoffice_"
+#define APP_PROTOCOL "pw-office"
+#define FILE_PREFIX "pwoffice_"
 
 #define URL_SITE                "http://www.onlyoffice.com"
 #define URL_SIGNUP              "https://onlyoffice.com/registration.aspx?desktop=true"

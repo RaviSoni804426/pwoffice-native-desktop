@@ -1,5 +1,5 @@
 
-TARGET = DesktopEditors
+TARGET = PWOffice
 DESTDIR = $$PWD
 
 include(defaults.pri)

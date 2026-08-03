@@ -18,11 +18,15 @@
 #define UPD_PATH                        str(sIntProductName + "Updates")
 #define APP_REG_PATH                    str("Software\" + APP_PATH)
 #define APP_REG_UNINST_KEY              str(sCompanyName + " " + sProductName)
-#define APP_USER_MODEL_ID               "ASC.Documents.5"
-#define APP_MUTEX_NAME                  "TEAMLAB"
-#define APPWND_CLASS_NAME               "DocEditorsWindowClass"
+; These three must stay identical to APP_USER_MODEL_ID / APP_MUTEX_NAME /
+; WINDOW_CLASS_NAME in desktop-apps/win-linux/src/defines.h. The installer uses
+; them to find and close a running instance, so a stale value here makes this
+; installer close a *different* PW app instead of its own.
+#define APP_USER_MODEL_ID               "PW.Office.1"
+#define APP_MUTEX_NAME                  "PWOFFICE"
+#define APPWND_CLASS_NAME               "PWOfficeWindowClass"
 
-#define iconsExe                        "DesktopEditors.exe"
+#define iconsExe                        "PWOffice.exe"
 #define NAME_EXE_OUT                    "editors.exe"
 
 #define ASSC_APP_NAME                   "PW Office"
