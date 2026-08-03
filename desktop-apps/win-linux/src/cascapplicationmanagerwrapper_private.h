@@ -361,9 +361,15 @@ public:
                         openDocument(opts);
                     }
                 } else {
+                    // "form" creates a PDF, so it must map to OFORM_PDF and not to
+                    // DOCXF. editorTypeFromFormat sends DOCXF to etDocumentMasterForm,
+                    // the legacy Word-based form designer, while GetNewFilePath still
+                    // hands it empty/new.pdf - so the old mapping loaded a PDF into the
+                    // document editor and the converter ran out of memory on it.
+                    // OFORM_PDF maps to etPdf, which is the editor that can open it.
                     int _f = format == L"word" ? AVS_OFFICESTUDIO_FILE_DOCUMENT_DOCX :
                                  format == L"cell" ? AVS_OFFICESTUDIO_FILE_SPREADSHEET_XLSX :
-                                 format == L"form" ? AVS_OFFICESTUDIO_FILE_DOCUMENT_DOCXF :
+                                 format == L"form" ? AVS_OFFICESTUDIO_FILE_DOCUMENT_OFORM_PDF :
                                  // format == L"draw" ? AVS_OFFICESTUDIO_FILE_DRAW_VSDX :
                                  format == L"slide" ? AVS_OFFICESTUDIO_FILE_PRESENTATION_PPTX : AVS_OFFICESTUDIO_FILE_UNKNOWN;
 

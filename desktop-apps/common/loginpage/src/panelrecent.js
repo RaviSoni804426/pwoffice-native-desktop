@@ -760,11 +760,13 @@
                         }
                     ],
                     onDocumentSelect: (docType) => {
-                        if (docType === 'form') {
-                            openFile(OPEN_FILE_FOLDER, '');
-                        } else {
-                            window.sdk.command("create:new", docType);
-                        }
+                        // Every tile creates a new document, including the PDF one.
+                        // Upstream sent 'form' to a file browser instead, because the
+                        // tile meant "build a form from an existing document". Here the
+                        // tile is labelled PDF, so clicking it opened a file picker and
+                        // looked like nothing happened. The application menu already
+                        // creates PDFs through this same create:new path.
+                        window.sdk.command("create:new", docType);
                     }
                 });
 

@@ -2417,9 +2417,11 @@ QString CAscApplicationManagerWrapper::newFileName(int format)
 
 QString CAscApplicationManagerWrapper::newFileName(const std::wstring& format)
 {
+    // Kept in step with the create:new handler in
+    // cascapplicationmanagerwrapper_private.h - "form" is a PDF, not a DOCXF.
     int _f = format == L"word" ? AVS_OFFICESTUDIO_FILE_DOCUMENT_DOCX :
                  format == L"cell" ? AVS_OFFICESTUDIO_FILE_SPREADSHEET_XLSX :
-                 format == L"form" ? AVS_OFFICESTUDIO_FILE_DOCUMENT_DOCXF :
+                 format == L"form" ? AVS_OFFICESTUDIO_FILE_DOCUMENT_OFORM_PDF :
                  // format == L"draw" ? AVS_OFFICESTUDIO_FILE_DRAW_VSDX :
                  format == L"slide" ? AVS_OFFICESTUDIO_FILE_PRESENTATION_PPTX : AVS_OFFICESTUDIO_FILE_UNKNOWN;
 
