@@ -60,9 +60,13 @@ Name: "assoc_pptx"; Description: "Open .pptx files with {#AppName}"; GroupDescri
 Name: "assoc_pdf";  Description: "Open .pdf files with {#AppName}";  GroupDescription: "File associations:"; Flags: unchecked
 
 [Files]
-; *.bak* keeps rollback copies of patched binaries out of the payload - they
-; are working files, and some of them are pre-fix executables.
-Source: "{#SourceDir}\*"; DestDir: "{app}"; Excludes: "*.bak,*.bak2,*.bak3,*.bak-*"; \
+; Keep rollback copies of patched binaries out of the payload - they are
+; working files, and some of them are pre-fix executables.
+;
+; Do NOT add a bare "*.bak" here. ONLYOFFICE ships real product files ending
+; in .bak (dictionaries/hyph_sl_SI.dic.bak), so that pattern silently drops
+; them. Only the suffixes our own patch scripts create are listed.
+Source: "{#SourceDir}\*"; DestDir: "{app}"; Excludes: "*.bak-*,*.bak2,*.bak3"; \
     Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
