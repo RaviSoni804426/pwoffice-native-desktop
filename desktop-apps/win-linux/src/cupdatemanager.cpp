@@ -807,7 +807,15 @@ void CUpdateManager::skipVersion()
 int CUpdateManager::getUpdateMode()
 {
     GET_REGISTRY_USER(reg_user);
-    return modeToEnum(reg_user.value("autoUpdateMode", "ask").toString());
+    /* Default off, not "ask". The update daemon's feed is whatever
+       ENV_URL_APPCAST_MAIN was set to at build time, and for these forks that
+       is ONLYOFFICE's own appcast - so the prompt offered to replace a
+       branded PW app with stock ONLYOFFICE. There is no PW feed to point at,
+       and only one update service can be registered per machine anyway, so
+       whichever app installs it answers for all of them.
+
+       Set autoUpdateMode to "ask" or "silent" once a PW feed exists. */
+    return modeToEnum(reg_user.value("autoUpdateMode", "disable").toString());
 }
 
 void CUpdateManager::onLoadCheckFinished(const QString &json)
