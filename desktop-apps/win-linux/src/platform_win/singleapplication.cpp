@@ -97,6 +97,18 @@ bool SingleApplication::sendMessage(const QByteArray &message)
     return false;
 }
 
+bool SingleApplication::takeOverAsPrimary()
+{
+    if (m_isPrimary)
+        return true;
+
+    // The mutex is held by a process that never answered. Register the
+    // receiver window ourselves and carry on as the primary instance.
+    startPrimary();
+    m_isPrimary = (m_hWnd != nullptr);
+    return m_isPrimary;
+}
+
 void SingleApplication::startPrimary()
 {
     HINSTANCE hInstance = GetModuleHandle(nullptr);

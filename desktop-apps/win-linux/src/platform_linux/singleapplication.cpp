@@ -171,6 +171,25 @@ bool SingleApplication::sendMessage(const QByteArray &msg)
     return socket.sendMessage((void*)msg.data(), msg.size());
 }
 
+bool SingleApplication::takeOverAsPrimary()
+{
+    if (m_isPrimary)
+        return true;
+
+    // Nobody answered on the port, so the instance that claimed it is gone.
+    // Rebind and carry on as the primary instance.
+    delete m_socket;
+    m_socket = new CSocket(0, Utils::getInstAppPort(), false, true);
+    if (m_socket->isPrimaryInstance()) {
+        m_isPrimary = true;
+        m_socket->onMessageReceived([=](void *buff, size_t size) {
+            QString data = QString::fromLocal8Bit((const char*)buff, size);
+            QMetaObject::invokeMethod(this, "invokeSignal", Qt::QueuedConnection, Q_ARG(QString, data));
+        });
+    }
+    return m_isPrimary;
+}
+
 void SingleApplication::invokeSignal(const QString &data)
 {
     emit receivedMessage(data.toUtf8());

@@ -54,6 +54,9 @@ public:
 
     bool isPrimary();
     bool sendMessage(const QByteArray&);
+    // Claim the primary role when the instance holding it is no longer
+    // answering. See the call site in main.cpp.
+    bool takeOverAsPrimary();
 
 signals:
     void receivedMessage(QByteArray message);
