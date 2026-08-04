@@ -66,7 +66,11 @@ Name: "assoc_pdf";  Description: "Open .pdf files with {#AppName}";  GroupDescri
 ; Do NOT add a bare "*.bak" here. ONLYOFFICE ships real product files ending
 ; in .bak (dictionaries/hyph_sl_SI.dic.bak), so that pattern silently drops
 ; them. Only the suffixes our own patch scripts create are listed.
-Source: "{#SourceDir}\*"; DestDir: "{app}"; Excludes: "*.bak-*,*.bak2,*.bak3"; \
+; unins000.* is Inno's own uninstaller, regenerated on every install. When the
+; payload comes from an installed copy those files are sitting there and get
+; packaged, only to be overwritten by the fresh one - harmless, but it ships
+; several megabytes of a stale uninstaller for no reason.
+Source: "{#SourceDir}\*"; DestDir: "{app}"; Excludes: "*.bak-*,*.bak2,*.bak3,unins000.*"; \
     Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
